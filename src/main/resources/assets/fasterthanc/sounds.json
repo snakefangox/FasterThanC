@@ -1,0 +1,14 @@
+{
+  "railgun": {
+    "subtitle": "Railgun Fires",
+    "sounds": [
+      "fasterthanc:railgun"
+    ]
+  },
+  "jumpdrive": {
+    "subtitle": "Jumpdrive Spools Up",
+    "sounds": [
+      "fasterthanc:jumpdrive"
+    ]
+  }
+}

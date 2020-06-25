@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "fasterthanc:black_scale_hull"
+  },
+  "result": "fasterthanc:black_scatter_hull",
+  "count": 1
+}

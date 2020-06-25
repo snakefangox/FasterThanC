@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "net.snakefangox.fasterthanc.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

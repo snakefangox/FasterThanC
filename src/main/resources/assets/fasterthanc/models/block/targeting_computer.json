@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "fasterthanc:block/targeting_computer_front",
+    "down": "fasterthanc:block/targeting_computer",
+    "up": "fasterthanc:block/targeting_computer",
+    "east": "fasterthanc:block/targeting_computer",
+    "west": "fasterthanc:block/targeting_computer",
+    "north": "fasterthanc:block/targeting_computer_front",
+    "south": "fasterthanc:block/targeting_computer"
+  }
+}

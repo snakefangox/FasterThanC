@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "fasterthanc:block/reactor_controller"
+    },
+    "facing=south": {
+      "model": "fasterthanc:block/reactor_controller",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "fasterthanc:block/reactor_controller",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "fasterthanc:block/reactor_controller",
+      "y": 90
+    }
+  }
+}

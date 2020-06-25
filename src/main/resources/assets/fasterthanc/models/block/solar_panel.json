@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "fasterthanc:block/solar_panel",
+    "down": "fasterthanc:block/reactor_casing",
+    "up": "fasterthanc:block/solar_panel",
+    "east": "fasterthanc:block/reactor_casing",
+    "west": "fasterthanc:block/reactor_casing",
+    "north": "fasterthanc:block/reactor_casing",
+    "south": "fasterthanc:block/reactor_casing"
+  }
+}

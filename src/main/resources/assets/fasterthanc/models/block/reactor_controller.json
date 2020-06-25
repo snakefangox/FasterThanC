@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "fasterthanc:block/reactor_controller",
+    "down": "fasterthanc:block/reactor_casing",
+    "up": "fasterthanc:block/reactor_casing",
+    "east": "fasterthanc:block/reactor_casing",
+    "west": "fasterthanc:block/reactor_casing",
+    "north": "fasterthanc:block/reactor_controller",
+    "south": "fasterthanc:block/reactor_casing"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "fasterthanc:cyan_skirting_hull"
+  },
+  "result": "fasterthanc:cyan_skirting_hull",
+  "count": 1
+}

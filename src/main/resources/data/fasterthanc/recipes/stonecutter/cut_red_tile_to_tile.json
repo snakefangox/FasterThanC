@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "fasterthanc:red_tile_hull"
+  },
+  "result": "fasterthanc:red_tile_hull",
+  "count": 1
+}

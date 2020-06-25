@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,deployed=false": {
+      "model": "fasterthanc:block/hardpoint"
+    },
+    "facing=south,deployed=false": {
+      "model": "fasterthanc:block/hardpoint",
+      "y": 180
+    },
+    "facing=west,deployed=false": {
+      "model": "fasterthanc:block/hardpoint",
+      "y": 270
+    },
+    "facing=east,deployed=false": {
+      "model": "fasterthanc:block/hardpoint",
+      "y": 90
+    },
+    "facing=north,deployed=true": {
+      "model": "fasterthanc:block/hardpoint_deployed"
+    },
+    "facing=south,deployed=true": {
+      "model": "fasterthanc:block/hardpoint_deployed",
+      "y": 180
+    },
+    "facing=west,deployed=true": {
+      "model": "fasterthanc:block/hardpoint_deployed",
+      "y": 270
+    },
+    "facing=east,deployed=true": {
+      "model": "fasterthanc:block/hardpoint_deployed",
+      "y": 90
+    }
+  }
+}

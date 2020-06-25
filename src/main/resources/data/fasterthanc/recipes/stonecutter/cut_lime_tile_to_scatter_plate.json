@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "fasterthanc:lime_tile_hull"
+  },
+  "result": "fasterthanc:lime_scatter_plate_hull",
+  "count": 1
+}

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "fasterthanc",
+  "version": "${version}",
+  "name": "Faster Than C",
+  "description": "A blatant FTL rip off. Well kinda, not really, yes. \nDark Halls by the incredibly talented Valo",
+  "authors": [
+    "Snakefangox"
+  ],
+  "license": "MIT",
+  "icon": "assets/fasterthanc/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.snakefangox.fasterthanc.FasterThanC"
+    ],
+    "client": [
+      "net.snakefangox.fasterthanc.ClientInit"
+    ]
+  },
+  "mixins": [
+    "fasterthanc.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.8.7+build.201",
+    "fabric": "*",
+    "minecraft": "1.16.1"
+  }
+}

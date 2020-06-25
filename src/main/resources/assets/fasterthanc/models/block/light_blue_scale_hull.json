@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "fasterthanc:block/hull/light_blue_scale_hull"
+  }
+}

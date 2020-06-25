@@ -1,0 +1,23 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "XZX",
+    "ZCZ",
+    "XZX"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:white_concrete"
+    },
+    "Z": {
+      "item": "minecraft:iron_bars"
+    },
+    "C": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "fasterthanc:white_plate_hull",
+    "count": 16
+  }
+}

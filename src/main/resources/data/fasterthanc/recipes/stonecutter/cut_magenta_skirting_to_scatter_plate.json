@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "fasterthanc:magenta_skirting_hull"
+  },
+  "result": "fasterthanc:magenta_scatter_plate_hull",
+  "count": 1
+}

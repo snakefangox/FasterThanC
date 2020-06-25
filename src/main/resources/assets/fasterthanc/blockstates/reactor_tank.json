@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "filled=true": {
+      "model": "fasterthanc:block/reactor_tank_filled"
+    },
+    "filled=false": {
+      "model": "fasterthanc:block/reactor_tank"
+    }
+  }
+}

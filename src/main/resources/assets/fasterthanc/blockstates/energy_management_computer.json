@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "fasterthanc:block/energy_management_computer" },
+    "facing=south": { "model": "fasterthanc:block/energy_management_computer", "y": 180 },
+    "facing=west": { "model": "fasterthanc:block/energy_management_computer", "y": 270 },
+    "facing=east": { "model": "fasterthanc:block/energy_management_computer", "y": 90 }
+  }
+}

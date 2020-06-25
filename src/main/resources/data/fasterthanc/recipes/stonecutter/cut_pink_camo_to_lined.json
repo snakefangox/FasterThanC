@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "fasterthanc:pink_camo_hull"
+  },
+  "result": "fasterthanc:pink_lined_hull",
+  "count": 1
+}

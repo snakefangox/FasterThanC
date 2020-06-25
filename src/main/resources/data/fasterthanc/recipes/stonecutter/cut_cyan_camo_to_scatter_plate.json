@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "fasterthanc:cyan_camo_hull"
+  },
+  "result": "fasterthanc:cyan_scatter_plate_hull",
+  "count": 1
+}

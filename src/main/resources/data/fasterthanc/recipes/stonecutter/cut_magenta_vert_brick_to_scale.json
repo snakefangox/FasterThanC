@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "fasterthanc:magenta_vert_brick_hull"
+  },
+  "result": "fasterthanc:magenta_scale_hull",
+  "count": 1
+}

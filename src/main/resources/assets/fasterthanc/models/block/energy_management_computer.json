@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "fasterthanc:block/energy_computer_front",
+    "down": "fasterthanc:block/energy_computer_side",
+    "up": "fasterthanc:block/energy_computer_side",
+    "east": "fasterthanc:block/energy_computer_side",
+    "west": "fasterthanc:block/energy_computer_side",
+    "north": "fasterthanc:block/energy_computer_front",
+    "south": "fasterthanc:block/energy_computer_side"
+  }
+}
