@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "iDi",
+    "iGi"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:iron_trapdoor"
+    },
+    "i": {
+      "item": "c:titanium_ingot"
+    },
+    "D": {
+      "item": "minecraft:dispenser"
+    },
+    "G": {
+      "item": "fasterthanc:jump_drive_field_chamber"
+    }
+  },
+  "result": {
+    "item": "fasterthanc:jump_beacon",
+    "count": 1
+  }
+}

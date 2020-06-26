@@ -10,5 +10,18 @@
     "sounds": [
       "fasterthanc:jumpdrive"
     ]
+  },
+  "dark_halls": {
+    "subtitle": "Strange Music Plays",
+    "sounds": [
+      "fasterthanc:dark_halls"
+    ],
+    "stream": true
+  },
+  "laser_shot": {
+    "subtitle": "Laser Fires",
+    "sounds": [
+      "fasterthanc:laser_shot"
+    ]
   }
 }

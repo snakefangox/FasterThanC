@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " ii",
+    "iGi",
+    "ii "
+  ],
+  "key": {
+    "i": {
+      "item": "c:titanium_ingot"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    }
+  },
+  "result": {
+    "item": "fasterthanc:empty_fuel_cell",
+    "count": 4
+  }
+}

@@ -28,19 +28,19 @@ public class HardpointBER extends BlockEntityRenderer<HardpointBE> {
 			switch (dir){
 				case NORTH:
 					matrices.translate(0.5, 0.5, 0.85);
-					rotate(matrices, pitch, yaw + dir.asRotation());
+					rotate(matrices, pitch, yaw + dir.asRotation(), dir);
 					break;
 				case SOUTH:
 					matrices.translate(0.5, 0.5, 0.15);
-					rotate(matrices, pitch, yaw + dir.asRotation());
+					rotate(matrices, pitch, yaw + dir.asRotation(), dir);
 					break;
 				case EAST:
 					matrices.translate(0.15, 0.5, 0.5);
-					rotate(matrices, pitch, yaw + dir.getOpposite().asRotation());
+					rotate(matrices, pitch, yaw + dir.getOpposite().asRotation(), dir);
 					break;
 				case WEST:
 					matrices.translate(0.85, 0.5, 0.5);
-					rotate(matrices, pitch, yaw + dir.getOpposite().asRotation());
+					rotate(matrices, pitch, yaw + dir.getOpposite().asRotation(), dir);
 					break;
 			}
 			matrices.scale(5,5,5);
@@ -50,8 +50,12 @@ public class HardpointBER extends BlockEntityRenderer<HardpointBE> {
 		}
 	}
 
-	private void rotate(MatrixStack matrices, float pitch, float yaw) {
-		matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(pitch));
+	private void rotate(MatrixStack matrices, float pitch, float yaw, Direction dir) {
+		if (dir == Direction.NORTH || dir == Direction.SOUTH) {
+			matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(pitch));
+		}else {
+			matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(pitch));
+		}
 		matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(yaw));
 	}
 }

@@ -1,16 +1,15 @@
 package net.snakefangox.fasterthanc.blocks.blockentities;
 
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.fabricmc.loader.util.sat4j.core.Vec;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Direction;
@@ -30,6 +29,7 @@ public class HardpointBE extends EnergyBE implements SimpleInventory, BlockEntit
 	DefaultedList<ItemStack> itemStacks = DefaultedList.ofSize(1, ItemStack.EMPTY);
 	float pitch = 0;
 	float yaw = 0;
+	int cooldown = 0;
 	boolean powered = false;
 
 	public HardpointBE() {
@@ -55,9 +55,10 @@ public class HardpointBE extends EnergyBE implements SimpleInventory, BlockEntit
 	public void onEnergy(EnergyHandler be) {
 		int amount = getCachedState().get(Hardpoint.DEPLOYED) ? 1 : 0;
 		powered = be.claimEnergy(getEnergyID(), new EnergyPackage(amount, getName()));
+		if (cooldown > 0) --cooldown;
 	}
 
-	public String getName(){
+	public String getName() {
 		return NAME + getStack(0).getName().getString();
 	}
 
@@ -114,7 +115,8 @@ public class HardpointBE extends EnergyBE implements SimpleInventory, BlockEntit
 	}
 
 	public void fire() {
-		if (powered && !getStack(0).isEmpty()){
+		if (powered && !getStack(0).isEmpty() && cooldown == 0) {
+			cooldown = 3;
 			Vec3d firingDirVec = getDirectionVector();
 			Direction face = getCachedState().get(HorizontalFacingBlock.FACING);
 			Direction firingDir = face == Direction.NORTH || face == Direction.SOUTH ? face : face.getOpposite();
@@ -126,11 +128,12 @@ public class HardpointBE extends EnergyBE implements SimpleInventory, BlockEntit
 					firingPosVec, RayTraceContext.ShapeType.COLLIDER, RayTraceContext.FluidHandling.ANY,
 					new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ()));
 			BlockHitResult result = world.rayTrace(rtc);
-			for (int i = 0; i < Math.sqrt(pos.getSquaredDistance(result.getBlockPos())); i++){
+			for (int i = 0; i < Math.sqrt(pos.getSquaredDistance(result.getBlockPos())); i++) {
 				Vec3d part = firingDirVec.multiply(i);
 				((ServerWorld) world).spawnParticles(ParticleTypes.FIREWORK, pos.getX() + 0.5 + part.x, pos.getY() + 1.5 + part.y, pos.getZ() + 0.5 + part.z,
 						2, 0.0, 0.0, 0.0, 0);
 			}
+			world.playSound(null, pos, FRegister.LASER_FIRES, SoundCategory.BLOCKS, 4, 1);
 			world.createExplosion(null, result.getBlockPos().getX(), result.getBlockPos().getY(), result.getBlockPos().getZ(),
 					5, Explosion.DestructionType.DESTROY);
 		}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "DDD",
+    "SSS"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:lapis_lazuli"
+    },
+    "D": {
+      "item": "minecraft:daylight_detector"
+    },
+    "S": {
+      "item": "fasterthanc:reactor_casing"
+    }
+  },
+  "result": {
+    "item": "fasterthanc:solar_panel",
+    "count": 1
+  }
+}

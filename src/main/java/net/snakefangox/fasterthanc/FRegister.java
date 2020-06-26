@@ -3,6 +3,8 @@ package net.snakefangox.fasterthanc;
 import com.google.common.base.Supplier;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.biomes.v1.OverworldBiomes;
+import net.fabricmc.fabric.api.biomes.v1.OverworldClimate;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -18,6 +20,9 @@ import net.minecraft.item.Item;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
 import net.snakefangox.fasterthanc.blocks.*;
 import net.snakefangox.fasterthanc.blocks.blockentities.*;
 import net.snakefangox.fasterthanc.gui.*;
@@ -25,6 +30,12 @@ import net.snakefangox.fasterthanc.items.BeaconCoordsStorage;
 import net.snakefangox.fasterthanc.items.DebugTool;
 import net.snakefangox.fasterthanc.items.EnergyMeter;
 import net.snakefangox.fasterthanc.items.ShipWeapon;
+import net.snakefangox.fasterthanc.worldgen.CrashedShipFeature;
+import net.snakefangox.fasterthanc.worldgen.LavaDotFeature;
+import net.snakefangox.fasterthanc.worldgen.ShipGraveyardBiome;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FRegister {
 
@@ -81,6 +92,18 @@ public class FRegister {
 
 	//Sound Events
 	public static SoundEvent JUMP_DRIVE_SPOOLS;
+	public static SoundEvent LASER_FIRES;
+	public static SoundEvent DARK_HALLS;
+
+	//Biomes
+	public static Biome SPACESHIP_GRAVEYARD;
+
+	//Hull
+	public static final List<Block> HULL_BLOCKS = new ArrayList<>();
+
+	//Features
+	public static Feature<DefaultFeatureConfig> CRASHED_SHIP;
+	public static Feature<DefaultFeatureConfig> LAVA_DOT;
 
 	public static void registerEverything() {
 		registerBlock(reactor_casing, new Identifier(FasterThanC.MODID, "reactor_casing"));
@@ -132,7 +155,23 @@ public class FRegister {
 						(TargetingComputerBE) player.world.getBlockEntity(buf.readBlockPos())));
 
 		JUMP_DRIVE_SPOOLS = registerSoundEvent(new Identifier(FasterThanC.MODID, "jumpdrive"));
+		LASER_FIRES = registerSoundEvent(new Identifier(FasterThanC.MODID, "laser_shot"));
+		DARK_HALLS = registerSoundEvent(new Identifier(FasterThanC.MODID, "dark_halls"));
 
+		CRASHED_SHIP = Registry.register(
+				Registry.FEATURE,
+				new Identifier(FasterThanC.MODID, "crashed_ship_parts"),
+				new CrashedShipFeature(DefaultFeatureConfig.CODEC));
+		LAVA_DOT = Registry.register(
+				Registry.FEATURE,
+				new Identifier(FasterThanC.MODID, "lava_dot"),
+				new LavaDotFeature(DefaultFeatureConfig.CODEC));
+
+		SPACESHIP_GRAVEYARD = Registry.register(Registry.BIOME,
+				new Identifier(FasterThanC.MODID, "spaceship_graveyard"), new ShipGraveyardBiome());
+
+
+		OverworldBiomes.addContinentalBiome(SPACESHIP_GRAVEYARD, OverworldClimate.DRY, 120D);
 
 		registerHull();
 	}
@@ -157,6 +196,7 @@ public class FRegister {
 				Block hullBlock = new Block(FabricBlockSettings.of(Material.METAL).breakByTool(FabricToolTags.PICKAXES).strength(5, 15));
 				Registry.register(Registry.BLOCK, id, hullBlock);
 				Registry.register(Registry.ITEM, id, new BlockItem(hullBlock, new Item.Settings().group(FasterThanC.HULL)));
+				HULL_BLOCKS.add(hullBlock);
 			}
 		}
 	}

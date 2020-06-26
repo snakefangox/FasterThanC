@@ -1,8 +1,5 @@
 {
   "ores": [
-    "cobalt",
-    "titanium",
-    "tungsten",
-    "iridium"
+    "titanium"
   ]
 }
