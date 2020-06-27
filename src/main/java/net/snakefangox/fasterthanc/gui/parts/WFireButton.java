@@ -20,7 +20,7 @@ public class WFireButton extends WAbstractButton {
 	int id = 0;
 	BlockPos pos = new BlockPos(0, 0, 0);
 
-	public static final Identifier FIRE = new Identifier(FasterThanC.MODID, "textures/gui/fire_button.png");
+	public static final Identifier FIRE = new Identifier(FasterThanC.MODID, "textures/gui/button_fire.png");
 
 	@Override
 	public void draw(MatrixStack matrices, VertexConsumerProvider.Immediate provider) {
