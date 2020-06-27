@@ -96,7 +96,7 @@ public class Jump implements OvertimeTask {
 				}
 				break;
 			case FINALIZE:
-				if (index == 0) {
+				if (index == 0 && !shipPositions.isEmpty()) {
 					Box field = new Box(minX, minY, minZ, maxX, maxY, maxZ).expand(1);
 					List<? extends Entity> entities = from.getEntities((Entity) null, field, EntityPredicates.VALID_ENTITY);
 					for (Entity entity : entities) {
