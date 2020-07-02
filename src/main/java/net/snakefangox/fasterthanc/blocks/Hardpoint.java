@@ -37,7 +37,9 @@ public class Hardpoint extends HorizontalRotatableBlock implements BlockEntityPr
 			HardpointBE hardpointBE = (HardpointBE) world.getBlockEntity(pos);
 			if (heldStack.getItem() instanceof ShipWeapon && hardpointBE.getStack(0).isEmpty()) {
 				ItemStack stack = new ItemStack(heldStack.getItem(), 1);
-				heldStack.decrement(1);
+				if (!player.isCreative()) {
+					heldStack.decrement(1);
+				}
 				hardpointBE.setStack(0, stack);
 				hardpointBE.handleChanges();
 			} else if (heldStack.isEmpty() && !hardpointBE.getStack(0).isEmpty()) {
