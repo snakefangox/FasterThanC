@@ -2,8 +2,6 @@ package net.snakefangox.fasterthanc.tools;
 
 import java.util.List;
 
-import javafx.scene.control.TextFormatter;
-
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.text.LiteralText;
