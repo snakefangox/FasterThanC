@@ -171,7 +171,7 @@ public class FRegister {
 				new Identifier(FasterThanC.MODID, "spaceship_graveyard"), new ShipGraveyardBiome());
 
 
-		OverworldBiomes.addContinentalBiome(SPACESHIP_GRAVEYARD, OverworldClimate.DRY, 120D);
+		OverworldBiomes.addContinentalBiome(SPACESHIP_GRAVEYARD, OverworldClimate.DRY, 0.6D);
 
 		registerHull();
 	}

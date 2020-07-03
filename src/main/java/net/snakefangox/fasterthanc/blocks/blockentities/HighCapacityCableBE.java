@@ -37,12 +37,17 @@ public class HighCapacityCableBE extends BlockEntity implements EnergyHandler, C
 
 	@Override
 	public void provideEnergy(UUID uuid, EnergyPackage energyPackage) {
-		CableNetworkStorage.getInstance((ServerWorld) world).getOrCreateCableNetwork(networkID, pos, world).provideEnergy(uuid, energyPackage);
+		try {
+			CableNetworkStorage.getInstance((ServerWorld) world).getOrCreateCableNetwork(networkID, pos, world).provideEnergy(uuid, energyPackage);
+		}catch (NullPointerException p){}
 	}
 
 	@Override
 	public boolean claimEnergy(UUID uuid, EnergyPackage energyPackage) {
+		try {
 		return CableNetworkStorage.getInstance((ServerWorld) world).getOrCreateCableNetwork(networkID, pos, world).claimEnergy(uuid, energyPackage);
+		}catch (NullPointerException p){}
+		return false;
 	}
 
 	@Override
