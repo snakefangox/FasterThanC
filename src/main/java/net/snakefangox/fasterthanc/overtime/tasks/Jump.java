@@ -70,7 +70,7 @@ public class Jump implements OvertimeTask {
 			case CHECK:
 				if (index < destPositions.size()) {
 					BlockPos pos = destPositions.get(index++);
-					jumpObstructed = !World.isHeightInvalid(pos) && to.isAir(pos) ? jumpObstructed : true;
+					jumpObstructed = World.isHeightInvalid(pos) || !to.isAir(pos) || jumpObstructed;
 				} else {
 					stage = Stage.TRANSFER;
 					index = 0;

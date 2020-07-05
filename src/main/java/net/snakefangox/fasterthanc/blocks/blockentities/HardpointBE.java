@@ -59,7 +59,7 @@ public class HardpointBE extends EnergyBE implements SimpleInventory, BlockEntit
 	}
 
 	public String getName() {
-		return NAME + getStack(0).getName().getString();
+		return NAME + getStack(0).getTranslationKey();
 	}
 
 	@Override

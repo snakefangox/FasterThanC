@@ -7,6 +7,7 @@ import net.snakefangox.fasterthanc.gui.parts.WBlankPanel;
 import net.snakefangox.fasterthanc.gui.parts.WFireButton;
 import net.snakefangox.fasterthanc.gui.parts.WPowerSwitch;
 import net.snakefangox.fasterthanc.gui.parts.WTargetingTextBox;
+import net.snakefangox.fasterthanc.tools.TranslateHelper;
 import spinnery.client.screen.BaseContainerScreen;
 import spinnery.widget.*;
 import spinnery.widget.api.Position;
@@ -46,7 +47,7 @@ public class TargetingComputerScreen extends BaseContainerScreen<TargetingComput
 						Size.of(energyNetScroll.getWidth() - energyNetScroll.getScrollbarWidth() - 8, 30));
 				panel.setIndex(j);
 				panel.createChild(WStaticText::new, Position.of(panel, 20, 2, 10), Size.of(100, 16))
-						.setText(linkedContainer.names[j]);
+						.setText(TranslateHelper.translateIfNeeded(linkedContainer.names[j]));
 				panel.createChild(WFireButton::new, Position.of(panel), Size.of(16, 16)).setId(j)
 						.setPos(linkedContainer.controllerBE.getPos());
 				panel.createChild(WStaticText::new, Position.of(panel, 20, 18, 10), Size.of(100, 8))

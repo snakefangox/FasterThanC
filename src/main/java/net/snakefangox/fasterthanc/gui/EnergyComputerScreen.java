@@ -5,6 +5,7 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
 import net.snakefangox.fasterthanc.gui.parts.WBlankPanel;
 import net.snakefangox.fasterthanc.gui.parts.WPowerSwitch;
+import net.snakefangox.fasterthanc.tools.TranslateHelper;
 import spinnery.client.screen.BaseContainerScreen;
 import spinnery.widget.*;
 import spinnery.widget.api.Position;
@@ -44,7 +45,7 @@ public class EnergyComputerScreen extends BaseContainerScreen<EnergyComputerCont
 						Size.of(energyNetScroll.getWidth() - energyNetScroll.getScrollbarWidth() - 8, 30));
 				panel.setIndex(j);
 				panel.createChild(WStaticText::new, Position.of(panel, 20, 2, 10), Size.of(100, 16))
-						.setText(linkedContainer.names[j]);
+						.setText(TranslateHelper.translateIfNeeded(linkedContainer.names[j]));
 				WPowerSwitch powerSwitch = panel.createChild(WPowerSwitch::new, Position.of(panel, 0, 2, 10), Size.of(16, 16))
 						.setToggleState(linkedContainer.powered[j]);
 				powerSwitch.setUuid(linkedContainer.uuids[j]);
