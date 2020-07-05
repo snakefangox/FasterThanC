@@ -79,8 +79,9 @@ public class Jump implements OvertimeTask {
 				if (index < destPositions.size()) {
 					BlockState state = from.getBlockState(shipPositions.get(index));
 					BlockEntity be = from.getBlockEntity(shipPositions.get(index));
+					// BlockStateArgument Will Not Save BE Data If a BE Does Not Exist
 					if (state.getBlock() instanceof BlockEntityProvider) {
-						from.setBlockEntity(shipPositions.get(index), ((BlockEntityProvider) state.getBlock()).createBlockEntity(from));
+						to.setBlockEntity(destPositions.get(index), ((BlockEntityProvider) state.getBlock()).createBlockEntity(to));
 					}
 					new BlockStateArgument(state, Collections.emptySet(), be != null ? be.toTag(new CompoundTag()) : null)
 							.setBlockState((ServerWorld) to, destPositions.get(index), 2 | 32 | 64);
