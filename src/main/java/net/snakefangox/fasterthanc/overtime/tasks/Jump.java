@@ -3,6 +3,8 @@ package net.snakefangox.fasterthanc.overtime.tasks;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.ChestBlock;
+import net.minecraft.block.DoorBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.command.arguments.BlockStateArgument;
 import net.minecraft.entity.Entity;
@@ -14,6 +16,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 import net.snakefangox.fasterthanc.FRegister;
@@ -80,7 +83,10 @@ public class Jump implements OvertimeTask {
 					BlockState state = from.getBlockState(shipPositions.get(index));
 					BlockEntity be = from.getBlockEntity(shipPositions.get(index));
 					if (state.getBlock() instanceof BlockEntityProvider) {
+						// Remove Old BE
 						from.removeBlockEntity(shipPositions.get(index));
+						// Non-Mojang Code May not Check For Null When Deleting the Block, So Replace It With An Empty BE
+						from.setBlockEntity(shipPositions.get(index), ((BlockEntityProvider) state.getBlock()).createBlockEntity(to));
 						// BlockStateArgument Will Not Save BE Data If a BE Does Not Exist
 						to.setBlockEntity(destPositions.get(index), ((BlockEntityProvider) state.getBlock()).createBlockEntity(to));
 					}
