@@ -42,15 +42,17 @@ public class TargetingComputer extends HorizontalRotatableBlock implements Block
 		if (world.getBlockEntity(pos) instanceof TargetingComputerBE) {
 			TargetingComputerBE be = (TargetingComputerBE) world.getBlockEntity(pos);
 			PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
+			assert be != null;
 			passedData.writeInt(be.getHardPoints().length);
 			for (BlockPos hardpoint : be.getHardPoints()) {
 				if (world.getBlockEntity(hardpoint) instanceof HardpointBE){
 					HardpointBE hard = (HardpointBE) world.getBlockEntity(hardpoint);
+					assert hard != null;
 					passedData.writeUuid(hard.getEnergyID());
-					passedData.writeString(hard.getName());
+					passedData.writeText(hard.getName());
 					passedData.writeFloat(hard.getPitch());
 					passedData.writeFloat(hard.getYaw());
-				}else{
+				} else {
 					passedData.writeUuid(UUID.randomUUID());
 					passedData.writeString("Invalid");
 					passedData.writeFloat(0);

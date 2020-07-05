@@ -8,10 +8,10 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.snakefangox.fasterthanc.blocks.TargetingComputer;
 import net.snakefangox.fasterthanc.blocks.blockentities.EnergyManagementComputerBE;
 import net.snakefangox.fasterthanc.blocks.blockentities.TargetingComputerBE;
 import net.snakefangox.fasterthanc.gui.EnergyComputerContainer;
@@ -133,13 +133,13 @@ public class Networking {
 				((packetContext, packetByteBuf) -> {
 					int size = packetByteBuf.readInt();
 					UUID[] uuids = new UUID[size];
-					String[] names = new String[size];
+					Text[] names = new Text[size];
 					float[] pitch = new float[size];
 					float[] yaw = new float[size];
 
 					for (int i = 0; i < size; i++) {
 						uuids[i] = packetByteBuf.readUuid();
-						names[i] = packetByteBuf.readString();
+						names[i] = packetByteBuf.readText();
 						pitch[i] = packetByteBuf.readFloat();
 						yaw[i] = packetByteBuf.readFloat();
 					}

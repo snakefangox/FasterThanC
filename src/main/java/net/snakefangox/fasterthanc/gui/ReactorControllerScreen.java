@@ -38,6 +38,7 @@ public class ReactorControllerScreen extends BaseContainerScreen<ReactorControll
 
 	@Override
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float tickDelta) {
+		renderBackground(matrices);
 		super.render(matrices, mouseX, mouseY, tickDelta);
 		if (linkedContainer.shouldUpdate) {
 			linkedContainer.shouldUpdate = false;

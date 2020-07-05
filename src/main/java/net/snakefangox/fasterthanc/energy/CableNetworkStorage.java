@@ -18,22 +18,21 @@ public class CableNetworkStorage extends PersistentState {
 
 	public static final String KEY = FasterThanC.MODID + "cable_network";
 
-	List<CableNetwork> cable_networks = new ArrayList<CableNetwork>();
+	List<CableNetwork> cable_networks = new ArrayList<>();
 	int nextID = 0;
 
 	public CableNetworkStorage() {
 		super(KEY);
 	}
 
-	public CableNetwork createNewCableNetwork(BlockPos pos, World world) {
+	public CableNetwork createNewCableNetwork(BlockPos pos, World world, int id) {
 		CableNetwork cn = new CableNetwork();
 		cn.addCable(pos, this);
-		int index = getNextID();
 		// Shouldn't actually need the index here but better safe then sorry
-		cable_networks.add(index, cn);
+		cable_networks.add(id, cn);
 		BlockEntity be = world.getBlockEntity(pos);
 		if (be instanceof NetworkMember) {
-			((NetworkMember) be).setNetwork(index);
+			((NetworkMember) be).setNetwork(id);
 		}
 		return cn;
 	}
@@ -46,9 +45,10 @@ public class CableNetworkStorage extends PersistentState {
 	}
 
 	public CableNetwork getOrCreateCableNetwork(int id, BlockPos pos, World world) {
-		if (id >= 0 && id < cable_networks.size())
-			return cable_networks.get(id);
-		return createNewCableNetwork(pos, world);
+		CableNetwork network = getCableNetwork(id);
+		if (network != null)
+			return network;
+		return createNewCableNetwork(pos, world, id);
 	}
 
 	public void addToCableNetwork(int id, BlockPos pos, World world) {
@@ -64,7 +64,9 @@ public class CableNetworkStorage extends PersistentState {
 		CableNetwork cn1 = getCableNetwork(id1);
 		CableNetwork cn2 = getCableNetwork(id2);
 		if (cn1 != null && cn2 != null) {
-			cn1.appendNetwork(cn2.getNetwork());
+			if (!cn1.equals(cn2)) {
+				cn1.appendNetwork(cn2.getNetwork());
+			}
 			for (BlockPos pos : cn2.network) {
 				BlockEntity be = world.getBlockEntity(pos);
 				if (be instanceof NetworkMember) {
@@ -101,7 +103,7 @@ public class CableNetworkStorage extends PersistentState {
 	}
 
 	public static CableNetworkStorage getInstance(ServerWorld world) {
-		return world.getPersistentStateManager().getOrCreate(() -> new CableNetworkStorage(), KEY);
+		return world.getPersistentStateManager().getOrCreate(CableNetworkStorage::new, KEY);
 	}
 
 	@Override
@@ -156,32 +158,40 @@ public class CableNetworkStorage extends PersistentState {
 
 	public static class CableNetwork implements EnergyHandler {
 
-		private AdjGraph network = new AdjGraph();
+		private final AdjGraph network = new AdjGraph();
 		private final Map<UUID, EnergyPackage> providers = new HashMap<>();
 		private final Map<UUID, EnergyPackage> claimants = new HashMap<>();
 		private final Set<UUID> poweredOff = new HashSet<>();
 
 
 		public void addCable(BlockPos pos, CableNetworkStorage instance) {
-			network.add(pos);
-			instance.markDirty();
+			synchronized (network) {
+				network.add(pos);
+				instance.markDirty();
+			}
 		}
 
 		public void appendNetwork(Graph<BlockPos> appNetwork) {
-			for (BlockPos pos : appNetwork) {
-				network.add(pos);
+			synchronized (network) {
+				for (BlockPos pos : appNetwork) {
+					network.add(pos);
+				}
 			}
 		}
 
 		public void appendNetwork(Set<BlockPos> appNetwork) {
-			for (BlockPos pos : appNetwork) {
-				network.add(pos);
+			synchronized (network) {
+				for (BlockPos pos : appNetwork) {
+					network.add(pos);
+				}
 			}
 		}
 
 		public void removeCable(BlockPos pos, CableNetworkStorage instance) {
-			network.removeVertex(pos);
-			instance.markDirty();
+			synchronized (network) {
+				network.removeVertex(pos);
+				instance.markDirty();
+			}
 		}
 
 		@Override
@@ -202,7 +212,9 @@ public class CableNetworkStorage extends PersistentState {
 		}
 
 		public Graph<BlockPos> getNetwork() {
-			return network;
+			synchronized (network) {
+				return network;
+			}
 		}
 
 		public Set<Set<BlockPos>> splitNetwork(BlockPos splitPoint) {
