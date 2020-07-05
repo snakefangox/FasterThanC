@@ -5,9 +5,7 @@ import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -54,9 +52,7 @@ public class HighCapacityCable extends Block implements BlockEntityProvider {
 		BOX_D = VoxelShapes.cuboid(box.minX, box.minZ, box.minY, box.maxX, box.maxZ, box.maxY);
 	}
 
-	@Override
-	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
-		super.onBlockAdded(state, world, pos, oldState, notify);
+	private void createNetwork(World world, BlockPos pos) {
 		if (!(world instanceof ServerWorld))
 			return;
 		BlockEntity be = world.getBlockEntity(pos);
@@ -76,9 +72,16 @@ public class HighCapacityCable extends Block implements BlockEntityProvider {
 				}
 			}
 			if (firstNetwork) {
-				CableNetworkStorage.getInstance((ServerWorld) world).createNewCableNetwork(pos, world);
+				CableNetworkStorage storage = CableNetworkStorage.getInstance((ServerWorld) world);
+				storage.createNewCableNetwork(pos, world, storage.getNextID());
 			}
 		}
+	}
+
+	@Override
+	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
+		super.onBlockAdded(state, world, pos, oldState, notify);
+		createNetwork(world, pos);
 	}
 
 	@Override

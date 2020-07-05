@@ -1,5 +1,6 @@
 package net.snakefangox.fasterthanc.gui;
 
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import spinnery.client.screen.BaseContainerScreen;
 import spinnery.widget.WAbstractWidget;
@@ -24,5 +25,11 @@ public class FiveSlotContainerScreen extends BaseContainerScreen<FiveSlotContain
 				Size.of(18, 18), wInterface);
 		WSlot.addArray(Position.of(mainPanel, (mainPanel.getWidth()/2) - (5 * 18) / 2, 20, 1), Size.of(18, 18),
 				wInterface, 0, FiveSlotContainer.INV, 5, 1);
+	}
+
+	@Override
+	public void render(MatrixStack matrices, int mouseX, int mouseY, float tickDelta) {
+		renderBackground(matrices);
+		super.render(matrices, mouseX, mouseY, tickDelta);
 	}
 }

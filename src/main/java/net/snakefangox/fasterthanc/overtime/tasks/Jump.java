@@ -3,8 +3,6 @@ package net.snakefangox.fasterthanc.overtime.tasks;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.ChestBlock;
-import net.minecraft.block.DoorBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.command.arguments.BlockStateArgument;
 import net.minecraft.entity.Entity;
@@ -12,11 +10,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 import net.snakefangox.fasterthanc.FRegister;
@@ -28,7 +24,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Jump implements OvertimeTask {
-
 	private static final int MAX_TRY_OFFSET = 25;
 
 	int index = 0;
@@ -53,6 +48,8 @@ public class Jump implements OvertimeTask {
 		this.from = from;
 		this.toType = toType;
 	}
+
+	private static final int FLAGS = 2 | 16 | 32 | 64;
 
 	@Override
 	public void process(MinecraftServer server) {
@@ -91,8 +88,8 @@ public class Jump implements OvertimeTask {
 						to.setBlockEntity(destPositions.get(index), ((BlockEntityProvider) state.getBlock()).createBlockEntity(to));
 					}
 					new BlockStateArgument(state, Collections.emptySet(), be != null ? be.toTag(new CompoundTag()) : null)
-							.setBlockState((ServerWorld) to, destPositions.get(index), 2 | 32 | 64);
-					from.setBlockState(shipPositions.get(index), FRegister.jump_energy.getDefaultState(), 2 | 32 | 64);
+							.setBlockState((ServerWorld) to, destPositions.get(index), FLAGS);
+					from.setBlockState(shipPositions.get(index), FRegister.jump_energy.getDefaultState(), FLAGS);
 					++index;
 				} else {
 					stage = Stage.FINALIZE;
@@ -109,17 +106,13 @@ public class Jump implements OvertimeTask {
 						double z = entity.getZ();
 						if (from != to)
 							entity.changeDimension((ServerWorld) to);
-						if (entity instanceof ServerPlayerEntity) {
-							entity.teleport(x + dest.getX(), y + dest.getY(), z + dest.getZ());
-						} else {
-							entity.updatePosition(x + dest.getX(), y + dest.getY(), z + dest.getZ());
-						}
+						entity.teleport(x + dest.getX(), y + dest.getY(), z + dest.getZ());
 					}
 				}
 				if (index < destPositions.size()) {
 					BlockPos posFrom = shipPositions.get(index);
 					++index;
-					from.setBlockState(posFrom, Blocks.AIR.getDefaultState(), 2 | 32 | 64);
+					from.setBlockState(posFrom, Blocks.AIR.getDefaultState(), FLAGS);
 					((ServerWorld) from).spawnParticles(ParticleTypes.LARGE_SMOKE, posFrom.getX() + 0.5, posFrom.getY() + 0.5, posFrom.getZ() + 0.5,
 							3, 0.0, 0.0, 0.0, 0);
 				} else {

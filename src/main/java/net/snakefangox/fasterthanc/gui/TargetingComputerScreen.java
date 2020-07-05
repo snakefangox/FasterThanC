@@ -36,6 +36,7 @@ public class TargetingComputerScreen extends BaseContainerScreen<TargetingComput
 
 	@Override
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float tickDelta) {
+		renderBackground(matrices);
 		super.render(matrices, mouseX, mouseY, tickDelta);
 		if (linkedContainer.shouldUpdate && linkedContainer.uuids.length > 0) {
 			linkedContainer.shouldUpdate = false;

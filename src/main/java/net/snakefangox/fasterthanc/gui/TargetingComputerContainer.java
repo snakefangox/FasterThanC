@@ -2,12 +2,13 @@ package net.snakefangox.fasterthanc.gui;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.text.Text;
 import net.snakefangox.fasterthanc.FRegister;
-import net.snakefangox.fasterthanc.blocks.blockentities.EnergyManagementComputerBE;
 import net.snakefangox.fasterthanc.blocks.blockentities.TargetingComputerBE;
 import spinnery.common.container.BaseContainer;
 import spinnery.widget.WSlot;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class TargetingComputerContainer extends BaseContainer {
@@ -16,7 +17,7 @@ public class TargetingComputerContainer extends BaseContainer {
 	public final TargetingComputerBE controllerBE;
 
 	public UUID[] uuids = new UUID[0];
-	public String[] names = new String[0];
+	public Text[] names = new Text[0];
 	public float[] pitch = new float[0];
 	public float[] yaw = new float[0];
 	public boolean shouldUpdate = false;
@@ -34,9 +35,9 @@ public class TargetingComputerContainer extends BaseContainer {
 		super.sendContentUpdates();
 		if (sendUpdates > 0){
 			--sendUpdates;
-		}else {
+		} else {
 			sendUpdates = 1200;
-			FRegister.targeting_computer.sendHardPointsToPlayer(controllerBE.getPos(), controllerBE.getWorld(), player);
+			FRegister.targeting_computer.sendHardPointsToPlayer(controllerBE.getPos(), Objects.requireNonNull(controllerBE.getWorld()), player);
 		}
 	}
 }
