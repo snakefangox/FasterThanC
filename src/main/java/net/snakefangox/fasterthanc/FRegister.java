@@ -17,6 +17,7 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -61,6 +62,7 @@ public class FRegister {
 	public static final Block jump_breaker = new Block(FabricBlockSettings.of(Material.METAL).strength(3, 20));
 	public static final Block creative_energy_port = new CreativeEnergyPort(FabricBlockSettings.of(Material.METAL).strength(3, 20));
 	public static final TargetingComputer targeting_computer = new TargetingComputer(FabricBlockSettings.of(Material.METAL).strength(3, 20));
+	public static final Block holographic_sky = new HolographicSky(FabricBlockSettings.of(Material.GLASS).strength(3, 20).sounds(BlockSoundGroup.GLASS).nonOpaque().allowsSpawning((state, world, pos, type) -> false).solidBlock((state, world, pos) -> false).suffocates((state, world, pos) -> false));
 
 	//Block Entity Types
 	public static BlockEntityType<ReactorControllerBE> reactor_controller_type;
@@ -74,6 +76,7 @@ public class FRegister {
 	public static BlockEntityType<HardpointBE> hardpoint_type;
 	public static BlockEntityType<CreativeEnergyPortBE> creative_energy_port_type;
 	public static BlockEntityType<TargetingComputerBE> targeting_computer_type;
+	public static BlockEntityType<HolographicSky.BE> holographic_sky_type;
 
 	//Items
 	public static final Item debug_tool = new DebugTool(new Item.Settings().group(FasterThanC.GENERAL).maxCount(1));
@@ -130,6 +133,7 @@ public class FRegister {
 		registerBlock(jump_breaker, new Identifier(FasterThanC.MODID, "jump_breaker"));
 		creative_energy_port_type = registerBlock(creative_energy_port, new Identifier(FasterThanC.MODID, "creative_energy_port"), CreativeEnergyPortBE::new);
 		targeting_computer_type = registerBlock(targeting_computer, new Identifier(FasterThanC.MODID, "targeting_computer"), TargetingComputerBE::new);
+		holographic_sky_type = registerBlock(holographic_sky, new Identifier(FasterThanC.MODID, "holographic_sky"), HolographicSky.BE::new);
 
 		registerItem(debug_tool, new Identifier(FasterThanC.MODID, "debug_tool"));
 		registerItem(empty_fuel_cell, new Identifier(FasterThanC.MODID, "empty_fuel_cell"));

@@ -188,5 +188,6 @@
 "block.fasterthanc.jump_breaker": "Jump Wave Breaker",
 "block.fasterthanc.creative_energy_port": "Creative Energy Port",
 "block.fasterthanc.targeting_computer": "Targeting Computer",
-  "biome.fasterthanc.spaceship_graveyard": "Spaceship Graveyard"
+  "biome.fasterthanc.spaceship_graveyard": "Spaceship Graveyard",
+"block.fasterthanc.holographic_sky": "Holographic Sky"
 }
