@@ -32,15 +32,22 @@ public class WFireButton extends WAbstractButton {
 	public void onMouseClicked(float mouseX, float mouseY, int mouseButton) {
 		super.onMouseClicked(mouseX, mouseY, mouseButton);
 		if (isWithinBounds(mouseX, mouseY)) {
-			PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
-			passedData.writeBlockPos(pos);
-			passedData.writeInt(id);
-			ClientSidePacketRegistry.INSTANCE.sendToServer(Networking.FIRE_TO_SERVER, passedData);
+			if (id >= 0) {
+				fire(id);
+			} else {
+				int maxID = Math.abs(id + 1);
+				for (int i = 0; i < maxID; i++) {
+					fire(i);
+				}
+			}
 		}
 	}
 
-	public int getId() {
-		return id;
+	private void fire(int id) {
+		PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
+		passedData.writeBlockPos(pos);
+		passedData.writeInt(id);
+		ClientSidePacketRegistry.INSTANCE.sendToServer(Networking.FIRE_TO_SERVER, passedData);
 	}
 
 	public WFireButton setId(int id) {
