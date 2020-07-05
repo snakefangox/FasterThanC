@@ -2,10 +2,10 @@ package net.snakefangox.fasterthanc.gui;
 
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.snakefangox.fasterthanc.gui.parts.WBlankPanel;
 import net.snakefangox.fasterthanc.gui.parts.WFireButton;
-import net.snakefangox.fasterthanc.gui.parts.WPowerSwitch;
 import net.snakefangox.fasterthanc.gui.parts.WTargetingTextBox;
 import spinnery.client.screen.BaseContainerScreen;
 import spinnery.widget.*;
@@ -42,10 +42,20 @@ public class TargetingComputerScreen extends BaseContainerScreen<TargetingComput
 			linkedContainer.shouldUpdate = false;
 			float offset = energyNetScroll.getOffsetY();
 			energyNetScroll.remove(energyNetScroll.getWidgets().toArray(new WAbstractWidget[energyNetScroll.getWidgets().size()]));
+
+			WBlankPanel fireAllPanel = energyNetScroll.createChild(WBlankPanel::new, Position.of(energyNetScroll, 0, 16),
+					Size.of(energyNetScroll.getWidth() - energyNetScroll.getScrollbarWidth() - 8, 16));
+			fireAllPanel.setIndex(0);
+			fireAllPanel.createChild(WStaticText::new, Position.of(fireAllPanel, 20, 2, 10), Size.of(100, 16))
+					.setText(new TranslatableText("text.fire_all"));
+			fireAllPanel.createChild(WFireButton::new, Position.of(fireAllPanel), Size.of(16, 16)).setId(-1 - linkedContainer.uuids.length)
+					.setPos(linkedContainer.controllerBE.getPos());
+			energyNetScroll.addRow(fireAllPanel);
+
 			for (int j = 0; j < linkedContainer.uuids.length; j++) {
-				WBlankPanel panel = energyNetScroll.createChild(WBlankPanel::new, Position.of(energyNetScroll, 0, 16 * j),
+				WBlankPanel panel = energyNetScroll.createChild(WBlankPanel::new, Position.of(energyNetScroll, 0, 16 * (j + 1)),
 						Size.of(energyNetScroll.getWidth() - energyNetScroll.getScrollbarWidth() - 8, 30));
-				panel.setIndex(j);
+				panel.setIndex(j + 1);
 				panel.createChild(WStaticText::new, Position.of(panel, 20, 2, 10), Size.of(100, 16))
 						.setText(linkedContainer.names[j]);
 				panel.createChild(WFireButton::new, Position.of(panel), Size.of(16, 16)).setId(j)

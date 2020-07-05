@@ -190,5 +190,6 @@
     "block.fasterthanc.targeting_computer": "Targeting Computer",
     "biome.fasterthanc.spaceship_graveyard": "Spaceship Graveyard",
     "block.fasterthanc.holographic_sky": "Holographic Sky",
-    "text.hardpoint_name": "Hardpoint: %s"
+    "text.hardpoint_name": "Hardpoint: %s",
+    "text.fire_all": "Fire All"
 }

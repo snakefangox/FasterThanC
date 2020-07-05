@@ -84,8 +84,6 @@ public class Jump implements OvertimeTask {
 						from.removeBlockEntity(shipPositions.get(index));
 						// Non-Mojang Code May not Check For Null When Deleting the Block, So Replace It With An Empty BE
 						from.setBlockEntity(shipPositions.get(index), ((BlockEntityProvider) state.getBlock()).createBlockEntity(to));
-						// BlockStateArgument Will Not Save BE Data If a BE Does Not Exist
-						to.setBlockEntity(destPositions.get(index), ((BlockEntityProvider) state.getBlock()).createBlockEntity(to));
 					}
 					new BlockStateArgument(state, Collections.emptySet(), be != null ? be.toTag(new CompoundTag()) : null)
 							.setBlockState((ServerWorld) to, destPositions.get(index), FLAGS);
@@ -161,6 +159,6 @@ public class Jump implements OvertimeTask {
 	}
 
 	enum Stage {
-		SETUP, CHECK, TRANSFER, FINALIZE, FINISHED;
+		SETUP, CHECK, TRANSFER, FINALIZE, FINISHED
 	}
 }
