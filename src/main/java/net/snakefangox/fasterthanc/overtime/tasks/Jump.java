@@ -17,7 +17,6 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 import net.snakefangox.fasterthanc.FRegister;
-import net.snakefangox.fasterthanc.blocks.HighCapacityCable;
 import net.snakefangox.fasterthanc.overtime.OvertimeManager;
 import net.snakefangox.fasterthanc.overtime.OvertimeTask;
 
@@ -70,7 +69,7 @@ public class Jump implements OvertimeTask {
 			case CHECK:
 				if (index < destPositions.size()) {
 					BlockPos pos = destPositions.get(index++);
-					jumpObstructed = !World.isHeightInvalid(pos) && to.isAir(pos) ? jumpObstructed : true;
+					jumpObstructed = World.isHeightInvalid(pos) || !to.isAir(pos) || jumpObstructed;
 				} else {
 					stage = Stage.TRANSFER;
 					index = 0;
@@ -80,14 +79,11 @@ public class Jump implements OvertimeTask {
 				if (index < destPositions.size()) {
 					BlockState state = from.getBlockState(shipPositions.get(index));
 					BlockEntity be = from.getBlockEntity(shipPositions.get(index));
-					new BlockStateArgument(state, Collections.emptySet(), be != null ? be.toTag(new CompoundTag()) : null)
-							.setBlockState((ServerWorld) to, destPositions.get(index), 2 | 32 | 64);
-					if (state.getBlock() instanceof HighCapacityCable) {
-						FRegister.high_capacity_cable.onPlaced(to, destPositions.get(index), state, null, null);
-					}
 					if (state.getBlock() instanceof BlockEntityProvider) {
 						from.setBlockEntity(shipPositions.get(index), ((BlockEntityProvider) state.getBlock()).createBlockEntity(from));
 					}
+					new BlockStateArgument(state, Collections.emptySet(), be != null ? be.toTag(new CompoundTag()) : null)
+							.setBlockState((ServerWorld) to, destPositions.get(index), 2 | 32 | 64);
 					from.setBlockState(shipPositions.get(index), FRegister.jump_energy.getDefaultState(), 2 | 32 | 64);
 					++index;
 				} else {
@@ -107,7 +103,7 @@ public class Jump implements OvertimeTask {
 							entity.changeDimension((ServerWorld) to);
 						if (entity instanceof ServerPlayerEntity) {
 							entity.teleport(x + dest.getX(), y + dest.getY(), z + dest.getZ());
-						}else {
+						} else {
 							entity.updatePosition(x + dest.getX(), y + dest.getY(), z + dest.getZ());
 						}
 					}

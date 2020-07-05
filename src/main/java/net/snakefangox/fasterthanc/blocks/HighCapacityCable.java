@@ -55,8 +55,8 @@ public class HighCapacityCable extends Block implements BlockEntityProvider {
 	}
 
 	@Override
-	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
-		super.onPlaced(world, pos, state, placer, itemStack);
+	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
+		super.onBlockAdded(state, world, pos, oldState, notify);
 		if (!(world instanceof ServerWorld))
 			return;
 		BlockEntity be = world.getBlockEntity(pos);
