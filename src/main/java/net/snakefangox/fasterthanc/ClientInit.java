@@ -34,8 +34,10 @@ public class ClientInit implements ClientModInitializer {
 		BuiltinItemRendererRegistry.INSTANCE.register(FRegister.holographic_sky.asItem(), new BuiltinItemRenderer() {
 			private final BlockEntity entity = new HolographicSky.BE();
 			@Override
-			public void render(ItemStack itemStack, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int i1) {
-				BlockEntityRenderDispatcher.INSTANCE.renderEntity(entity, matrixStack, vertexConsumerProvider, i, i1);
+			public void render(ItemStack itemStack, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, int overlay) {
+				matrixStack.push();
+				BlockEntityRenderDispatcher.INSTANCE.renderEntity(entity, matrixStack, vertexConsumerProvider, light, overlay);
+				matrixStack.pop();
 			}
 		});
 

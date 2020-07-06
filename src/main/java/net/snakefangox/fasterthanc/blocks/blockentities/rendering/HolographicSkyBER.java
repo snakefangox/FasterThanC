@@ -16,22 +16,23 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Matrix4f;
 import net.snakefangox.fasterthanc.blocks.HolographicSky;
-import org.lwjgl.opengl.GL30;
 
 @Environment(EnvType.CLIENT)
 public class HolographicSkyBER extends BlockEntityRenderer<HolographicSky.BE> {
+    @SuppressWarnings("deprecation")
     private static final RenderPhase.Target SKY_TARGET = new RenderPhase.Target("fasterthanc_sky_target", () -> {
+        RenderSystem.pushMatrix();
         RenderSystem.enableTexture();
-        RenderSystem.activeTexture(GL30.GL_TEXTURE0);
         WorldWithSky worldWithSky = (WorldWithSky) MinecraftClient.getInstance().worldRenderer;
         worldWithSky.getSky().beginRead();
     }, () -> {
         WorldWithSky worldWithSky = (WorldWithSky) MinecraftClient.getInstance().worldRenderer;
         worldWithSky.getSky().endRead();
-        RenderSystem.disableTexture();
+        RenderSystem.popMatrix();
     });
     @SuppressWarnings("deprecation")
     private static final RenderPhase.Texturing SKY_TEXTURING = new RenderPhase.Texturing("fasterthanc_sky_texturing", () -> {
+        RenderSystem.pushMatrix();
         RenderSystem.matrixMode(5890);
         RenderSystem.pushMatrix();
         RenderSystem.loadIdentity();
@@ -45,6 +46,7 @@ public class HolographicSkyBER extends BlockEntityRenderer<HolographicSky.BE> {
         RenderSystem.popMatrix();
         RenderSystem.matrixMode(5888);
         RenderSystem.clearTexGen();
+        RenderSystem.popMatrix();
     });
 
     public interface WorldWithSky {
@@ -55,14 +57,18 @@ public class HolographicSkyBER extends BlockEntityRenderer<HolographicSky.BE> {
         super(dispatcher);
     }
 
-    private RenderLayer getLayer() {
+    private static RenderLayer getLayer() {
         return RenderLayer.of("fasterthanc_holographic_sky", VertexFormats.POSITION_COLOR, 7, 256, false, true, RenderLayer.MultiPhaseParameters.builder().target(SKY_TARGET).texturing(SKY_TEXTURING).build(false));
     }
 
+    private static final RenderLayer LAYER = getLayer();
+
     public void render(HolographicSky.BE entity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j) {
+        matrixStack.push();
         float g = getHeight();
         Matrix4f matrix4f = matrixStack.peek().getModel();
-        renderLayer(entity, g, matrix4f, vertexConsumerProvider.getBuffer(getLayer()));
+        renderLayer(entity, g, matrix4f, vertexConsumerProvider.getBuffer(LAYER));
+        matrixStack.pop();
     }
 
     private void renderLayer(HolographicSky.BE entity, float f, Matrix4f matrix4f, VertexConsumer vertexConsumer) {
