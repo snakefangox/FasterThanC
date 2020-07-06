@@ -217,7 +217,9 @@ public class FRegister {
 	@SuppressWarnings("unchecked")
 	private static <T extends BlockEntity> BlockEntityType<T> registerBlock(Block block, Identifier id,
 																			Supplier<BlockEntity> be) {
-		registerBlock(block, id);
+		if (block != holographic_sky) {
+			registerBlock(block, id);
+		}
 		return (BlockEntityType<T>) Registry.register(Registry.BLOCK_ENTITY_TYPE, id,
 				BlockEntityType.Builder.create(be, block).build(null));
 	}
