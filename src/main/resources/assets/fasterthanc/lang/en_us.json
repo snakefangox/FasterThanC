@@ -190,6 +190,10 @@
     "block.fasterthanc.targeting_computer": "Targeting Computer",
     "biome.fasterthanc.spaceship_graveyard": "Spaceship Graveyard",
     "block.fasterthanc.holographic_sky": "Holographic Sky",
-    "text.hardpoint_name": "Hardpoint: %s",
-    "text.fire_all": "Fire All"
+    "text.fasterthanc.hardpoint": "Hardpoint: %s",
+    "text.fasterthanc.fire_all": "Fire All",
+    "text.fasterthanc.jump_drive": "Jump Drive",
+    "text.fasterthanc.reactor": "Reactor",
+    "text.fasterthanc.solar_panel": "Solar Panel",
+    "text.fasterthanc.creative_energy_port": "Creative Energy Port"
 }
