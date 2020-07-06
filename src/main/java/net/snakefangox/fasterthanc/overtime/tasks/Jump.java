@@ -23,14 +23,17 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.TeleportCommand;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
+import net.snakefangox.fasterthanc.FRegister;
+import net.snakefangox.fasterthanc.overtime.OvertimeManager;
+import net.snakefangox.fasterthanc.overtime.OvertimeTask;
 
 public class Jump implements OvertimeTask {
-
 	private static final int MAX_TRY_OFFSET = 25;
 
 	int index = 0;
@@ -58,6 +61,8 @@ public class Jump implements OvertimeTask {
 		this.from = from;
 		this.toType = toType;
 	}
+
+	private static final int FLAGS = 2 | 16 | 32 | 64;
 
 	@Override
 	public void process(MinecraftServer server) {
@@ -97,15 +102,15 @@ public class Jump implements OvertimeTask {
 				op = true;
 				BlockState state = from.getBlockState(shipPositions.get(index));
 				BlockEntity be = from.getBlockEntity(shipPositions.get(index));
-				new BlockStateArgument(state, Collections.emptySet(), be != null ? be.toTag(new CompoundTag()) : null)
-						.setBlockState((ServerWorld) to, destPositions.get(index), 2 | 32 | 64);
-				if (state.getBlock() instanceof HighCapacityCable) {
-					FRegister.high_capacity_cable.onPlaced(to, destPositions.get(index), state, null, null);
-				}
 				if (state.getBlock() instanceof BlockEntityProvider) {
-					from.setBlockEntity(shipPositions.get(index), ((BlockEntityProvider) state.getBlock()).createBlockEntity(from));
+					// Remove Old BE
+					from.removeBlockEntity(shipPositions.get(index));
+					// Non-Mojang Code May not Check For Null When Deleting the Block, So Replace It With An Empty BE
+					from.setBlockEntity(shipPositions.get(index), ((BlockEntityProvider) state.getBlock()).createBlockEntity(to));
 				}
-				from.setBlockState(shipPositions.get(index), FRegister.jump_energy.getDefaultState(), 2 | 32 | 64);
+				new BlockStateArgument(state, Collections.emptySet(), be != null ? be.toTag(new CompoundTag()) : null)
+						.setBlockState((ServerWorld) to, destPositions.get(index), FLAGS);
+				from.setBlockState(shipPositions.get(index), FRegister.jump_energy.getDefaultState(), FLAGS);
 			}
 			if (index < xSplit * zSplit) {
 				op = true;
@@ -190,6 +195,6 @@ public class Jump implements OvertimeTask {
 	}
 
 	enum Stage {
-		SETUP, CHECK, TRANSFER, FINALIZE, FINISHED;
+		SETUP, CHECK, TRANSFER, FINALIZE, FINISHED
 	}
 }

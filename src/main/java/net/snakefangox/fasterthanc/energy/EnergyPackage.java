@@ -1,11 +1,13 @@
 package net.snakefangox.fasterthanc.energy;
 
+import net.minecraft.text.Text;
+
 public class EnergyPackage {
 	int amount;
-	public final String name;
+	public final Text name;
 	private int remainingPulls = 4;
 
-	public EnergyPackage(int amount, String name) {
+	public EnergyPackage(int amount, Text name) {
 		this.amount = amount;
 		this.name = name;
 	}

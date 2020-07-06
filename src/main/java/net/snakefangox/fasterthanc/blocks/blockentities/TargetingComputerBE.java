@@ -28,6 +28,7 @@ public class TargetingComputerBE extends BlockEntity implements Energy, ScanCabl
 
 	@Override
 	public void tick() {
+		assert world != null;
 		if (world.getTime() % 21 == 0 && !world.isClient) {
 			OvertimeManager.instantRunTask(new ScanCableNetwork(pos, false, this, world, FRegister.hardpoint), world.getServer());
 		}
@@ -35,6 +36,7 @@ public class TargetingComputerBE extends BlockEntity implements Energy, ScanCabl
 
 	public void fireHardpoint(int id) {
 		if (id < hardPoints.length) {
+			assert world != null;
 			BlockEntity be = world.getBlockEntity(hardPoints[id]);
 			if (be instanceof HardpointBE && be.getCachedState().get(Hardpoint.DEPLOYED)) {
 				((HardpointBE)be).fire();
@@ -44,6 +46,7 @@ public class TargetingComputerBE extends BlockEntity implements Energy, ScanCabl
 
 	public void tiltHardpoint(int id, float pitch, float yaw) {
 		if (id < hardPoints.length) {
+			assert world != null;
 			BlockEntity be = world.getBlockEntity(hardPoints[id]);
 			if (be instanceof HardpointBE) {
 				((HardpointBE)be).setAim(pitch, yaw);

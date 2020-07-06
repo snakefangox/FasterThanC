@@ -5,7 +5,6 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
 import net.snakefangox.fasterthanc.gui.parts.WBlankPanel;
 import net.snakefangox.fasterthanc.gui.parts.WPowerSwitch;
-import net.snakefangox.fasterthanc.tools.TranslateHelper;
 import spinnery.client.screen.BaseContainerScreen;
 import spinnery.widget.*;
 import spinnery.widget.api.Position;
@@ -22,7 +21,7 @@ public class EnergyComputerScreen extends BaseContainerScreen<EnergyComputerCont
 		WInterface wInterface = getInterface();
 		wInterface.setTheme("spinnery:dark");
 		WPanel mainPanel = wInterface.createChild(WPanel::new, Position.of(0, 0, 0),
-				Size.of(9 * 18 + 8, 3 * 18 + 148)).setParent(wInterface);
+				Size.of(9 * 21 + 8, 3 * 18 + 148)).setParent(wInterface);
 		mainPanel.setOnAlign(WAbstractWidget::center);
 		mainPanel.center();
 		wInterface.add(mainPanel);
@@ -35,6 +34,7 @@ public class EnergyComputerScreen extends BaseContainerScreen<EnergyComputerCont
 
 	@Override
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float tickDelta) {
+		renderBackground(matrices);
 		super.render(matrices, mouseX, mouseY, tickDelta);
 		if (linkedContainer.shouldUpdate && linkedContainer.uuids.length > 0) {
 			linkedContainer.shouldUpdate = false;
@@ -45,15 +45,16 @@ public class EnergyComputerScreen extends BaseContainerScreen<EnergyComputerCont
 						Size.of(energyNetScroll.getWidth() - energyNetScroll.getScrollbarWidth() - 8, 30));
 				panel.setIndex(j);
 				panel.createChild(WStaticText::new, Position.of(panel, 20, 2, 10), Size.of(100, 16))
-						.setText(TranslateHelper.translateIfNeeded(linkedContainer.names[j]));
+						.setText(linkedContainer.names[j]);
 				WPowerSwitch powerSwitch = panel.createChild(WPowerSwitch::new, Position.of(panel, 0, 2, 10), Size.of(16, 16))
 						.setToggleState(linkedContainer.powered[j]);
 				powerSwitch.setUuid(linkedContainer.uuids[j]);
 				powerSwitch.setContainer(getContainer());
 				panel.createChild(WStaticText::new, Position.of(panel, 20, 18, 10), Size.of(100, 8))
 						.setText(Formatting.GRAY + linkedContainer.uuids[j].toString().split("-", 2)[0]);
-				panel.createChild(WStaticText::new, Position.ofTopRight(panel), Size.of(100, 16))
-						.setText((linkedContainer.claimSize > j ? Formatting.RED : Formatting.GREEN) + String.valueOf(linkedContainer.powers[j]));
+				String text = String.valueOf(linkedContainer.powers[j]);
+				panel.createChild(WStaticText::new, Position.of(panel, panel.getWidth() - textRenderer.getWidth(text), 2), Size.of(100, 16))
+						.setText((linkedContainer.claimSize > j ? Formatting.RED : Formatting.GREEN) + text);
 				energyNetScroll.addRow(panel);
 			}
 			energyNetScroll.setOffsetY(offset - 0.2f);

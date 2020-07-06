@@ -21,6 +21,7 @@ public abstract class EnergyBE extends BlockEntity implements Energy, Tickable {
 
 	@Override
 	public void tick() {
+		assert world != null;
 		if (!world.isClient && world.getTime() % Energy.ENERGY_TICK == 0) {
 			if (energyID == null)
 				energyID = UUID.randomUUID();

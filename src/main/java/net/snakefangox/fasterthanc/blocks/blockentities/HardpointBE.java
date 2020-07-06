@@ -10,6 +10,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Direction;
@@ -24,8 +26,6 @@ import net.snakefangox.fasterthanc.energy.EnergyPackage;
 import net.snakefangox.fasterthanc.tools.SimpleInventory;
 
 public class HardpointBE extends EnergyBE implements SimpleInventory, BlockEntityClientSerializable {
-
-	private static final String NAME = "Hardpoint: ";
 	DefaultedList<ItemStack> itemStacks = DefaultedList.ofSize(1, ItemStack.EMPTY);
 	float pitch = 0;
 	float yaw = 0;
@@ -58,8 +58,8 @@ public class HardpointBE extends EnergyBE implements SimpleInventory, BlockEntit
 		if (cooldown > 0) --cooldown;
 	}
 
-	public String getName() {
-		return NAME + getStack(0).getTranslationKey();
+	public Text getName() {
+		return new TranslatableText("text.fasterthanc.hardpoint", getStack(0).getName());
 	}
 
 	@Override
@@ -127,6 +127,7 @@ public class HardpointBE extends EnergyBE implements SimpleInventory, BlockEntit
 			RayTraceContext rtc = new RayTraceContext(new Vec3d(pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5),
 					firingPosVec, RayTraceContext.ShapeType.COLLIDER, RayTraceContext.FluidHandling.ANY,
 					new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ()));
+			assert world != null;
 			BlockHitResult result = world.rayTrace(rtc);
 			for (int i = 0; i < Math.sqrt(pos.getSquaredDistance(result.getBlockPos())); i++) {
 				Vec3d part = firingDirVec.multiply(i);

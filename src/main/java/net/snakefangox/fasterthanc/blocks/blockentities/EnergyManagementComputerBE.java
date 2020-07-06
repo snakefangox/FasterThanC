@@ -20,14 +20,16 @@ public class EnergyManagementComputerBE extends BlockEntity implements Energy {
 		EnergyHandler energyHandler = null;
 		for (Direction dir : Direction.values()) {
 			BlockPos blockPos = pos.offset(dir);
+			assert world != null;
 			BlockEntity be = world.getBlockEntity(blockPos);
 			if (be instanceof EnergyHandler) {
 				energyHandler = (EnergyHandler) be;
 			}
 		}
-		if (powerState && energyHandler != null){
+		if (powerState && energyHandler != null) {
 			energyHandler.getPoweredDown().add(uuid);
-		}else{
+		} else {
+			assert energyHandler != null;
 			energyHandler.getPoweredDown().remove(uuid);
 		}
 		FRegister.energy_management_computer.sendEnergyNetToPlayer(pos, world, playerEntity);

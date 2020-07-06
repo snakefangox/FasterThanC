@@ -3,6 +3,8 @@ package net.snakefangox.fasterthanc.blocks.blockentities;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
 import net.snakefangox.fasterthanc.FRegister;
@@ -14,7 +16,7 @@ import java.util.UUID;
 
 public class SolarPanelBE extends BlockEntity implements Energy, Tickable {
 
-	private static final String NAME = "Solar Panel";
+	private static final Text NAME = new TranslatableText("text.fasterthanc.solar_panel");
 	UUID energyID;
 
 	public SolarPanelBE() {
