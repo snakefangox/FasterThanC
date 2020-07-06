@@ -32,7 +32,7 @@ public class FasterThanC implements ModInitializer {
 		ServerStopCallback.EVENT.register(OvertimeManager::ServerClosing);
 		WorldTickCallback.EVENT.register(CableNetworkStorage::tickPipes);
 
-		if (FabricLoader.getInstance().isDevelopmentEnvironment());
-			//AutoGenJson.autoGenerateJson(MODID, "D:\\Code\\Fabric_mods\\FasterThanC");
+		if (FabricLoader.getInstance().isDevelopmentEnvironment())
+			AutoGenJson.autoGenerateJson(MODID, "D:\\Code\\Fabric_mods\\FasterThanC");
 	}
 }
