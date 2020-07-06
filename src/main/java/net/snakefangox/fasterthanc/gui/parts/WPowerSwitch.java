@@ -17,8 +17,8 @@ import spinnery.widget.WToggle;
 import java.util.UUID;
 
 public class WPowerSwitch extends WToggle {
-	private static final Identifier ON = new Identifier(FasterThanC.MODID, "textures/gui/on_button.png");
-	private static final Identifier OFF = new Identifier(FasterThanC.MODID, "textures/gui/off_button.png");
+	private static final Identifier ON = new Identifier(FasterThanC.MODID, "textures/gui/button_on.png");
+	private static final Identifier OFF = new Identifier(FasterThanC.MODID, "textures/gui/button_off.png");
 
 	private UUID uuid;
 	private EnergyComputerContainer container;

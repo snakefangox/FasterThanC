@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FRegister {
-
 	//Blocks
 	public static final Block reactor_casing = new Block(FabricBlockSettings.of(Material.METAL).strength(3, 20));
 	public static final ReactorController reactor_controller = new ReactorController(FabricBlockSettings.of(Material.METAL).strength(3, 20));
@@ -193,9 +192,9 @@ public class FRegister {
 			"scatter_plate", "skirting", "tile", "vert_brick"};
 
 	public static void registerHull() {
-		for (int c = 0; c < colours.length; c++) {
-			for (int t = 0; t < types.length; t++) {
-				String name = colours[c] + "_" + types[t] + "_hull";
+		for (String colour : colours) {
+			for (String type : types) {
+				String name = colour + "_" + type + "_hull";
 				Identifier id = new Identifier(FasterThanC.MODID, name);
 				Block hullBlock = new Block(FabricBlockSettings.of(Material.METAL).breakByTool(FabricToolTags.PICKAXES).strength(5, 15));
 				Registry.register(Registry.BLOCK, id, hullBlock);
@@ -217,9 +216,7 @@ public class FRegister {
 	@SuppressWarnings("unchecked")
 	private static <T extends BlockEntity> BlockEntityType<T> registerBlock(Block block, Identifier id,
 																			Supplier<BlockEntity> be) {
-		if (block != holographic_sky) {
-			registerBlock(block, id);
-		}
+		registerBlock(block, id);
 		return (BlockEntityType<T>) Registry.register(Registry.BLOCK_ENTITY_TYPE, id,
 				BlockEntityType.Builder.create(be, block).build(null));
 	}

@@ -37,8 +37,8 @@ public class ScanCableNetwork implements OvertimeTask {
 			if (currBlock == FRegister.high_capacity_cable && !scan.contains(off)) {
 				scan.add(off);
 			} else {
-				for (int i = 0; i < searchingFor.length; i++) {
-					if (searchingFor[i] == currBlock) {
+				for (Block block : searchingFor) {
+					if (block == currBlock) {
 						result.add(off);
 					}
 				}

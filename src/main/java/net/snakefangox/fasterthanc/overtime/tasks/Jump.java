@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.snakefangox.fasterthanc.FRegister;
-import net.snakefangox.fasterthanc.blocks.HighCapacityCable;
 import net.snakefangox.fasterthanc.overtime.OvertimeManager;
 import net.snakefangox.fasterthanc.overtime.OvertimeTask;
 
@@ -23,15 +22,11 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.TeleportCommand;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
-import net.snakefangox.fasterthanc.FRegister;
-import net.snakefangox.fasterthanc.overtime.OvertimeManager;
-import net.snakefangox.fasterthanc.overtime.OvertimeTask;
 
 public class Jump implements OvertimeTask {
 	private static final int MAX_TRY_OFFSET = 25;

@@ -37,7 +37,7 @@ public class JumpDriveControllerContainer extends BaseContainer {
 		super.sendContentUpdates();
 		if (sendUpdates > 0){
 			--sendUpdates;
-		}else {
+		} else {
 			sendUpdates = 20;
 			FRegister.jump_drive_controller.sendJumpDriveDataToPlayer(controllerBE.getPos(), controllerBE.getWorld(), player);
 		}

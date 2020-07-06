@@ -170,7 +170,7 @@ public class JumpDriveControllerBE extends BlockEntity implements SimpleInventor
 			if (blockEntity instanceof ReactorControllerBE) {
 				blockEntity = world.getBlockEntity(blockPos[0].add(((ReactorEnergyPortBE) blockEntity).controllerOffset));
 				fuel = ((ReactorControllerBE) blockEntity).consumeFuel();
-			}else if (blockEntity instanceof CreativeEnergyPortBE){
+			} else if (blockEntity instanceof CreativeEnergyPortBE){
 				fuel = true;
 			}
 		}
