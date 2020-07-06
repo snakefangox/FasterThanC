@@ -1,0 +1,4 @@
+accessWidener   v1  named
+
+#Allow use of the teleport command logic
+accessible method net/minecraft/server/command/TeleportCommand teleport (Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/entity/Entity;Lnet/minecraft/server/world/ServerWorld;DDDLjava/util/Set;FFLnet/minecraft/server/command/TeleportCommand$LookTarget;)V

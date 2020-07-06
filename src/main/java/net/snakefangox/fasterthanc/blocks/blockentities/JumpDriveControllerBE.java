@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import net.snakefangox.fasterthanc.FRegister;
+import net.snakefangox.fasterthanc.blocks.CreativeEnergyPort;
 import net.snakefangox.fasterthanc.energy.Energy;
 import net.snakefangox.fasterthanc.energy.EnergyHandler;
 import net.snakefangox.fasterthanc.energy.EnergyPackage;
@@ -77,8 +78,8 @@ public class JumpDriveControllerBE extends BlockEntity implements SimpleInventor
 			if (jumpCountdown > 0) {
 				--jumpCountdown;
 				if (world instanceof ServerWorld) {
-					((ServerWorld) world).spawnParticles(ParticleTypes.DRAGON_BREATH, pos.getX() + 0.5 + PART_RAND.nextFloat(),
-							pos.getY() + 0.5 + PART_RAND.nextFloat(), pos.getZ() + 0.5 + PART_RAND.nextFloat(), 5, 0, 0, 0, 1);
+					((ServerWorld) world).spawnParticles(ParticleTypes.DRAGON_BREATH, pos.getX() + PART_RAND.nextFloat(),
+							pos.getY() + PART_RAND.nextFloat(), pos.getZ() + PART_RAND.nextFloat(), 5, 0, 0, 0, 1);
 				}
 			} else {
 				jumpCountdown = -1;
@@ -90,7 +91,7 @@ public class JumpDriveControllerBE extends BlockEntity implements SimpleInventor
 	public void jump() {
 		if (energyPort != null && powered && isComplete) {
 			BlockPos port = pos.add(energyPort);
-			OvertimeManager.instantRunTask(new ScanCableNetwork(port, FRegister.reactor_energy_port, true, this, world), world.getServer());
+			OvertimeManager.instantRunTask(new ScanCableNetwork(port, true, this, world, FRegister.reactor_energy_port, FRegister.creative_energy_port), world.getServer());
 			if (!fuel) {
 				ErrorSender.notifyError(world, pos, "Jump drive cannot find fuel");
 				return;
@@ -162,10 +163,13 @@ public class JumpDriveControllerBE extends BlockEntity implements SimpleInventor
 
 	@Override
 	public void returnFindings(BlockPos... blockPos) {
-		if (blockPos.length > 0 && world.getBlockEntity(blockPos[0]) instanceof ReactorEnergyPortBE) {
-			BlockEntity blockEntity = world.getBlockEntity(blockPos[0].add(((ReactorEnergyPortBE) world.getBlockEntity(blockPos[0])).controllerOffset));
+		if (blockPos.length > 0) {
+			BlockEntity blockEntity = world.getBlockEntity(blockPos[0]);
 			if (blockEntity instanceof ReactorControllerBE) {
+				blockEntity = world.getBlockEntity(blockPos[0].add(((ReactorEnergyPortBE) blockEntity).controllerOffset));
 				fuel = ((ReactorControllerBE) blockEntity).consumeFuel();
+			}else if (blockEntity instanceof CreativeEnergyPortBE){
+				fuel = true;
 			}
 		}
 	}

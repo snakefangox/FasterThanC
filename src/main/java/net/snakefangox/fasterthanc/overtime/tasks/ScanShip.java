@@ -1,6 +1,7 @@
 package net.snakefangox.fasterthanc.overtime.tasks;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,6 +15,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 
 public class ScanShip implements OvertimeTask {
 
@@ -58,6 +60,7 @@ public class ScanShip implements OvertimeTask {
 	public boolean isFinished() {
 		boolean finished = index >= toScan.size();
 		if (finished) {
+			toScan.sort(Comparator.comparingInt(Vec3i::getY));
 			returnAddress.returnShipScanResults(toScan);
 		}
 		return finished || index >= SHIP_LIMIT;
