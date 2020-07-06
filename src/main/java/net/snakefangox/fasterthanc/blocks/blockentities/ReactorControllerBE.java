@@ -4,6 +4,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -24,7 +26,7 @@ public class ReactorControllerBE extends BlockEntity implements Tickable {
 	public static final int SCAN_FREQ = 200;
 	public static final int TICKS_PER_FUEL = 36000;
 	public boolean isComplete = false;
-	public static String name = "Reactor";
+	public static Text name = new TranslatableText("text.fasterthanc.reactor");
 	List<BlockPos> tanks = new ArrayList<>();
 	BlockPos energyPort = null;
 	public int chambers = 0;

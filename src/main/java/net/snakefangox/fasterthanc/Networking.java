@@ -91,6 +91,7 @@ public class Networking {
 					int chambers = packetByteBuf.readInt();
 					ItemStack stack = packetByteBuf.readItemStack();
 					packetContext.getTaskQueue().execute(() -> {
+						assert MinecraftClient.getInstance().player != null;
 						ScreenHandler screenHandler = MinecraftClient.getInstance().player.currentScreenHandler;
 						if (screenHandler instanceof JumpDriveControllerContainer) {
 							JumpDriveControllerContainer ec = ((JumpDriveControllerContainer) MinecraftClient.getInstance().player.currentScreenHandler);
@@ -106,13 +107,13 @@ public class Networking {
 					int size = packetByteBuf.readInt();
 					int claimSize = packetByteBuf.readInt();
 					UUID[] uuids = new UUID[size];
-					String[] names = new String[size];
+					Text[] names = new Text[size];
 					int[] powers = new int[size];
 					boolean[] powered = new boolean[size];
 
 					for (int i = 0; i < size; i++) {
 						uuids[i] = packetByteBuf.readUuid();
-						names[i] = packetByteBuf.readString();
+						names[i] = packetByteBuf.readText();
 						powers[i] = packetByteBuf.readInt();
 						powered[i] = packetByteBuf.readBoolean();
 					}

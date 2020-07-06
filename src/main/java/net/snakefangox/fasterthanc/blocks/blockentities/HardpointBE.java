@@ -54,12 +54,12 @@ public class HardpointBE extends EnergyBE implements SimpleInventory, BlockEntit
 	@Override
 	public void onEnergy(EnergyHandler be) {
 		int amount = getCachedState().get(Hardpoint.DEPLOYED) ? 1 : 0;
-		powered = be.claimEnergy(getEnergyID(), new EnergyPackage(amount, getName().getString()));
+		powered = be.claimEnergy(getEnergyID(), new EnergyPackage(amount, getName()));
 		if (cooldown > 0) --cooldown;
 	}
 
 	public Text getName() {
-		return new TranslatableText("text.hardpoint_name", getStack(0).getName());
+		return new TranslatableText("text.fasterthanc.hardpoint", getStack(0).getName());
 	}
 
 	@Override

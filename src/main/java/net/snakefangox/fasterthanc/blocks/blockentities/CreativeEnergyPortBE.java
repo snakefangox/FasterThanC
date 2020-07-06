@@ -1,5 +1,6 @@
 package net.snakefangox.fasterthanc.blocks.blockentities;
 
+import net.minecraft.text.TranslatableText;
 import net.snakefangox.fasterthanc.FRegister;
 import net.snakefangox.fasterthanc.blocks.templates.EnergyBE;
 import net.snakefangox.fasterthanc.energy.EnergyHandler;
@@ -12,6 +13,6 @@ public class CreativeEnergyPortBE extends EnergyBE {
 
 	@Override
 	public void onEnergy(EnergyHandler be) {
-		be.provideEnergy(getEnergyID(), new EnergyPackage(1000, "Creative Energy Port"));
+		be.provideEnergy(getEnergyID(), new EnergyPackage(1000, new TranslatableText("text.fasterthanc.creative_energy_port")));
 	}
 }
