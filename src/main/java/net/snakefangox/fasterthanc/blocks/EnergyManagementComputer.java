@@ -61,13 +61,13 @@ public class EnergyManagementComputer extends HorizontalRotatableBlock implement
 			passedData.writeInt(claim.size());
 			for (Map.Entry<UUID, EnergyPackage> entry : claim.entrySet()) {
 				passedData.writeUuid(entry.getKey());
-				passedData.writeString(entry.getValue().name);
+				passedData.writeText(entry.getValue().name);
 				passedData.writeInt(entry.getValue().getAmount());
 				passedData.writeBoolean(powered.contains(entry.getKey()));
 			}
 			for (Map.Entry<UUID, EnergyPackage> entry : provide.entrySet()) {
 				passedData.writeUuid(entry.getKey());
-				passedData.writeString(entry.getValue().name);
+				passedData.writeText(entry.getValue().name);
 				passedData.writeInt(entry.getValue().getAmount());
 				passedData.writeBoolean(powered.contains(entry.getKey()));
 			}

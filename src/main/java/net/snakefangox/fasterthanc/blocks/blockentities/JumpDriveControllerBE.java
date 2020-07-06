@@ -6,6 +6,8 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -34,7 +36,7 @@ public class JumpDriveControllerBE extends BlockEntity implements SimpleInventor
 	public static final int JUMP_COUNTDOWN = 6 * 20 - 10;
 	public static final int MAX_BLIND_JUMP = 100000;
 	DefaultedList<ItemStack> itemStacks = DefaultedList.ofSize(1, ItemStack.EMPTY);
-	public static String name = "Jump Drive";
+	public static Text name = new TranslatableText("text.fasterthanc.jump_drive");
 	public boolean isComplete = false;
 	public boolean powered = false;
 	BlockPos energyPort = null;

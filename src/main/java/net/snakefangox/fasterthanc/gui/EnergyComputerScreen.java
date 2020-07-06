@@ -21,7 +21,7 @@ public class EnergyComputerScreen extends BaseContainerScreen<EnergyComputerCont
 		WInterface wInterface = getInterface();
 		wInterface.setTheme("spinnery:dark");
 		WPanel mainPanel = wInterface.createChild(WPanel::new, Position.of(0, 0, 0),
-				Size.of(9 * 18 + 8, 3 * 18 + 148)).setParent(wInterface);
+				Size.of(9 * 21 + 8, 3 * 18 + 148)).setParent(wInterface);
 		mainPanel.setOnAlign(WAbstractWidget::center);
 		mainPanel.center();
 		wInterface.add(mainPanel);
@@ -52,8 +52,9 @@ public class EnergyComputerScreen extends BaseContainerScreen<EnergyComputerCont
 				powerSwitch.setContainer(getContainer());
 				panel.createChild(WStaticText::new, Position.of(panel, 20, 18, 10), Size.of(100, 8))
 						.setText(Formatting.GRAY + linkedContainer.uuids[j].toString().split("-", 2)[0]);
-				panel.createChild(WStaticText::new, Position.ofTopRight(panel), Size.of(100, 16))
-						.setText((linkedContainer.claimSize > j ? Formatting.RED : Formatting.GREEN) + String.valueOf(linkedContainer.powers[j]));
+				String text = String.valueOf(linkedContainer.powers[j]);
+				panel.createChild(WStaticText::new, Position.of(panel, panel.getWidth() - textRenderer.getWidth(text), 2), Size.of(100, 16))
+						.setText((linkedContainer.claimSize > j ? Formatting.RED : Formatting.GREEN) + text);
 				energyNetScroll.addRow(panel);
 			}
 			energyNetScroll.setOffsetY(offset - 0.2f);

@@ -47,7 +47,7 @@ public class TargetingComputerScreen extends BaseContainerScreen<TargetingComput
 					Size.of(energyNetScroll.getWidth() - energyNetScroll.getScrollbarWidth() - 8, 16));
 			fireAllPanel.setIndex(0);
 			fireAllPanel.createChild(WStaticText::new, Position.of(fireAllPanel, 20, 4, 10), Size.of(100, 16))
-					.setText(new TranslatableText("text.fire_all"));
+					.setText(new TranslatableText("text.fasterthanc.fire_all"));
 			fireAllPanel.createChild(WFireButton::new, Position.of(fireAllPanel), Size.of(16, 16)).setId(-1 - linkedContainer.uuids.length)
 					.setPos(linkedContainer.controllerBE.getPos());
 			energyNetScroll.addRow(fireAllPanel);
