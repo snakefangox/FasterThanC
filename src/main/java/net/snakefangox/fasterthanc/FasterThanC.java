@@ -5,16 +5,16 @@ import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.event.server.ServerStopCallback;
 import net.fabricmc.fabric.api.event.server.ServerTickCallback;
 import net.fabricmc.fabric.api.event.world.WorldTickCallback;
-import net.fabricmc.fabric.impl.dimension.FabricDimensionInternals;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import net.snakefangox.fasterthanc.energy.CableNetworkStorage;
 import net.snakefangox.fasterthanc.overtime.OvertimeManager;
 import net.snakefangox.fasterthanc.tools.AutoGenJson;
+
+import java.io.File;
+import java.io.IOException;
 
 public class FasterThanC implements ModInitializer {
 	public static final String MODID = "fasterthanc";
@@ -32,7 +32,12 @@ public class FasterThanC implements ModInitializer {
 		ServerStopCallback.EVENT.register(OvertimeManager::ServerClosing);
 		WorldTickCallback.EVENT.register(CableNetworkStorage::tickPipes);
 
-		if (FabricLoader.getInstance().isDevelopmentEnvironment())
-			AutoGenJson.autoGenerateJson(MODID, "D:\\Code\\Fabric_mods\\FasterThanC");
+		if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
+			try {
+				AutoGenJson.autoGenerateJson(MODID, new File("..").getCanonicalPath());
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
 	}
 }
