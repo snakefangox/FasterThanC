@@ -29,7 +29,7 @@ public class ReactorControllerContainer extends BaseContainer {
 		super.sendContentUpdates();
 		if (sendUpdates > 0){
 			--sendUpdates;
-		}else {
+		} else {
 			sendUpdates = 20;
 			FRegister.reactor_controller.sendReactorDataToPlayer(controllerBE.getPos(), controllerBE.getWorld(), player);
 		}

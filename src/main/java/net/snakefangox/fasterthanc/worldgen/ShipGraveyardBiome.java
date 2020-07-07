@@ -29,7 +29,7 @@ public class ShipGraveyardBiome extends Biome {
 		super(new Biome.Settings().configureSurfaceBuilder(SurfaceBuilder.DEFAULT, SCORCHED_CONFIG)
 				.precipitation(Precipitation.NONE).category(Category.DESERT).depth(0.5F).scale(0.1F).temperature(1F)
 				.downfall(0.3F).effects(new BiomeEffects.Builder().fogColor(0x99CC00).waterColor(0x66CC99).waterFogColor(0x66CC99)
-				.music(new MusicSound(FRegister.DARK_HALLS, 1200, 2400, true))
+				.music(new MusicSound(FRegister.DARK_HALLS, 100, 600, true))
 				.particleConfig(new BiomeParticleConfig(ParticleTypes.ASH, 0.5F)).build()).parent((String)null));
 		DefaultBiomeFeatures.addLandCarvers(this);
 		this.addCarver(GenerationStep.Carver.AIR, configureCarver(Carver.NETHER_CAVE, new ProbabilityConfig(0.9F)));

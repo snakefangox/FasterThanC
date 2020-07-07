@@ -30,7 +30,7 @@ public class TargetingComputerBE extends BlockEntity implements Energy, ScanCabl
 	public void tick() {
 		assert world != null;
 		if (world.getTime() % 21 == 0 && !world.isClient) {
-			OvertimeManager.instantRunTask(new ScanCableNetwork(pos, FRegister.hardpoint, false, this, world), world.getServer());
+			OvertimeManager.instantRunTask(new ScanCableNetwork(pos, false, this, world, FRegister.hardpoint), world.getServer());
 		}
 	}
 

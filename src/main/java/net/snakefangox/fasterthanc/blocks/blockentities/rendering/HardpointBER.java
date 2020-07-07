@@ -53,7 +53,7 @@ public class HardpointBER extends BlockEntityRenderer<HardpointBE> {
 	private void rotate(MatrixStack matrices, float pitch, float yaw, Direction dir) {
 		if (dir == Direction.NORTH || dir == Direction.SOUTH) {
 			matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(pitch));
-		}else {
+		} else {
 			matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(pitch));
 		}
 		matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(yaw));

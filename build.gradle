@@ -11,6 +11,7 @@ version = project.mod_version
 group = project.maven_group
 
 minecraft {
+    accessWidener "src/main/resources/fasterthanc.accesswidener"
 }
 
 repositories {
@@ -34,8 +35,8 @@ dependencies {
     modCompile "com.github.vini2003:spinnery:${project.spinnery_version}"
     include "com.github.vini2003:spinnery:${project.spinnery_version}"
 
-    modApi  "io.github.cottonmc:cotton-resources:${cotton_resources_version}"
-    include "io.github.cottonmc:cotton-resources:${cotton_resources_version}"
+    //modApi  "io.github.cottonmc:cotton-resources:${cotton_resources_version}"
+    //include "io.github.cottonmc:cotton-resources:${cotton_resources_version}"
 }
 
 processResources {

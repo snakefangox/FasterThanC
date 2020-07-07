@@ -1,5 +1,11 @@
 package net.snakefangox.fasterthanc.blocks;
 
+import net.snakefangox.fasterthanc.FRegister;
+import net.snakefangox.fasterthanc.blocks.blockentities.HardpointBE;
+import net.snakefangox.fasterthanc.blocks.templates.HorizontalRotatableBlock;
+import net.snakefangox.fasterthanc.items.ShipWeapon;
+import net.snakefangox.fasterthanc.tools.SimpleInventory;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -15,11 +21,6 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.snakefangox.fasterthanc.FRegister;
-import net.snakefangox.fasterthanc.blocks.blockentities.HardpointBE;
-import net.snakefangox.fasterthanc.blocks.templates.HorizontalRotatableBlock;
-import net.snakefangox.fasterthanc.items.ShipWeapon;
-import net.snakefangox.fasterthanc.tools.SimpleInventory;
 
 public class Hardpoint extends HorizontalRotatableBlock implements BlockEntityProvider {
 
@@ -71,13 +72,15 @@ public class Hardpoint extends HorizontalRotatableBlock implements BlockEntityPr
 		if (!deployed && powered) {
 			world.setBlockState(pos, state.with(DEPLOYED, true));
 			BlockEntity be = world.getBlockEntity(pos);
-			if (be instanceof HardpointBE)
+			if (be instanceof HardpointBE) {
 				be.resetBlock();
+			}
 		} else if (deployed && !powered) {
 			world.setBlockState(pos, state.with(DEPLOYED, false));
 			BlockEntity be = world.getBlockEntity(pos);
-			if (be instanceof HardpointBE)
+			if (be instanceof HardpointBE) {
 				be.resetBlock();
+			}
 		}
 	}
 
