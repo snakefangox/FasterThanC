@@ -1,6 +1,19 @@
 package net.snakefangox.fasterthanc.energy;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+
 import blue.endless.jankson.annotation.Nullable;
+import net.snakefangox.fasterthanc.FasterThanC;
+import net.snakefangox.fasterthanc.tools.AdjGraph;
+import net.snakefangox.fasterthanc.tools.Graph;
+
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
@@ -8,11 +21,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import net.snakefangox.fasterthanc.FasterThanC;
-import net.snakefangox.fasterthanc.tools.AdjGraph;
-import net.snakefangox.fasterthanc.tools.Graph;
-
-import java.util.*;
 
 public class CableNetworkStorage extends PersistentState {
 
@@ -29,7 +37,11 @@ public class CableNetworkStorage extends PersistentState {
 		CableNetwork cn = new CableNetwork();
 		cn.addCable(pos, this);
 		// Shouldn't actually need the index here but better safe then sorry
-		cable_networks.add(id, cn);
+		if (id <= cable_networks.size()) {
+			cable_networks.add(id, cn);
+		}else{
+			cable_networks.add(cable_networks.size(), cn);
+		}
 		BlockEntity be = world.getBlockEntity(pos);
 		if (be instanceof NetworkMember) {
 			((NetworkMember) be).setNetwork(id);
@@ -39,25 +51,29 @@ public class CableNetworkStorage extends PersistentState {
 
 	@Nullable
 	public CableNetwork getCableNetwork(int id) {
-		if (id >= 0 && id < cable_networks.size())
+		if (id >= 0 && id < cable_networks.size()) {
 			return cable_networks.get(id);
+		}
 		return null;
 	}
 
 	public CableNetwork getOrCreateCableNetwork(int id, BlockPos pos, World world) {
 		CableNetwork network = getCableNetwork(id);
-		if (network != null)
+		if (network != null) {
 			return network;
+		}
 		return createNewCableNetwork(pos, world, id);
 	}
 
 	public void addToCableNetwork(int id, BlockPos pos, World world) {
 		CableNetwork cn = getCableNetwork(id);
-		if (cn != null)
+		if (cn != null) {
 			cn.addCable(pos, this);
+		}
 		BlockEntity be = world.getBlockEntity(pos);
-		if (be instanceof NetworkMember)
+		if (be instanceof NetworkMember) {
 			((NetworkMember) be).setNetwork(id);
+		}
 	}
 
 	public void mergeCableNetworks(int id1, int id2, World world) {
@@ -90,8 +106,9 @@ public class CableNetworkStorage extends PersistentState {
 				cable_networks.add(index, cableNetwork);
 				for (BlockPos cable : netToBe) {
 					BlockEntity be = world.getBlockEntity(cable);
-					if (be instanceof NetworkMember)
+					if (be instanceof NetworkMember) {
 						((NetworkMember) be).setNetwork(index);
+					}
 				}
 			}
 			cable_networks.remove(cn);
@@ -125,8 +142,9 @@ public class CableNetworkStorage extends PersistentState {
 	public CompoundTag toTag(CompoundTag tag) {
 		for (int i = 0; i < cable_networks.size(); i++) {
 			CableNetwork cn = cable_networks.get(i);
-			if (cn != null)
+			if (cn != null) {
 				tag.put(String.valueOf(i), cn.toTag(new CompoundTag()));
+			}
 		}
 		tag.putInt("nextID", nextID);
 		return tag;
@@ -148,12 +166,13 @@ public class CableNetworkStorage extends PersistentState {
 	}
 
 	public static void tickPipes(World world) {
-		if (world.getTime() % Energy.ENERGY_TICK == 0 && world instanceof ServerWorld)
+		if (world.getTime() % Energy.ENERGY_TICK == 0 && world instanceof ServerWorld) {
 			for (CableNetwork network : getInstance((ServerWorld) world).cable_networks) {
 				if (network != null) {
 					network.energyTick();
 				}
 			}
+		}
 	}
 
 	public static class CableNetwork implements EnergyHandler {
@@ -205,7 +224,9 @@ public class CableNetworkStorage extends PersistentState {
 		}
 
 		@Override
-		public Set<UUID> getPoweredDown() {	return poweredOff; }
+		public Set<UUID> getPoweredDown() {
+			return poweredOff;
+		}
 
 		public boolean contains(BlockPos pos) {
 			return network.hasVertex(pos);
