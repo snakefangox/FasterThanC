@@ -49,8 +49,8 @@ public class Jump implements OvertimeTask {
 	int maxZ = Integer.MIN_VALUE;
 	int xSplit = 0;
 	int zSplit = 0;
-	int fieldX = 1;
-	int fieldZ = 1;
+	int fieldX = 0;
+	int fieldZ = 0;
 
 	public Jump(List<BlockPos> shipPositions, BlockPos dest, World from, RegistryKey<World> toType) {
 		this.shipPositions = shipPositions;
