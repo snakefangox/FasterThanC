@@ -49,6 +49,8 @@ public class Jump implements OvertimeTask {
 	int maxZ = Integer.MIN_VALUE;
 	int xSplit = 0;
 	int zSplit = 0;
+	int fieldX = 0;
+	int fieldZ = 0;
 
 	public Jump(List<BlockPos> shipPositions, BlockPos dest, World from, RegistryKey<World> toType) {
 		this.shipPositions = shipPositions;
@@ -109,10 +111,18 @@ public class Jump implements OvertimeTask {
 			}
 			if (index < xSplit * zSplit) {
 				op = true;
-				int x = (index % xSplit) * 16;
-				int z = (index / zSplit) * 16;
+				int x = fieldX * 16;
+				int z = fieldZ * 16;
 				Box field = new Box(minX + x, minY, minZ + z, Math.min(minX + x + 16, maxX) + 1, maxY + 1, Math.min(minZ + z + 16, maxZ) + 1);
-				entities.addAll(from.getEntities((Entity) null, field, EntityPredicates.VALID_ENTITY));
+				List<Entity> temp = from.getEntities((Entity) null, field, EntityPredicates.VALID_ENTITY);
+				temp.removeIf(e -> entities.contains(e));
+				entities.addAll(temp);
+				if (fieldX < xSplit) {
+					++fieldX;
+				} else {
+					fieldX = 0;
+					++fieldZ;
+				}
 			}
 			++index;
 			if (!op) {
@@ -125,7 +135,9 @@ public class Jump implements OvertimeTask {
 			if (index < destPositions.size()) {
 				opf = true;
 				BlockPos posFrom = shipPositions.get(index);
-				from.setBlockState(posFrom, Blocks.AIR.getDefaultState(), 2 | 32 | 64);
+				BlockPos posTo = destPositions.get(index);
+				from.setBlockState(posFrom, Blocks.AIR.getDefaultState(), FLAGS);
+				to.getBlockState(posTo).updateNeighbors(to, posTo, 2 | 32 | 64, 511);
 				if (index % 8 == 0) {
 					((ServerWorld) from).spawnParticles(ParticleTypes.LARGE_SMOKE, posFrom.getX() + 0.5, posFrom.getY() + 0.5, posFrom.getZ() + 0.5,
 							3, 0.0, 0.0, 0.0, 0);
@@ -141,7 +153,8 @@ public class Jump implements OvertimeTask {
 				try {
 					TeleportCommand.teleport(null, entity, (ServerWorld) to, x, y, z, EnumSet.noneOf(PlayerPositionLookS2CPacket.Flag.class),
 							entity.yaw, entity.pitch, null);
-				} catch (CommandSyntaxException ignored) {}
+				} catch (CommandSyntaxException ignored) {
+				}
 			}
 			++index;
 			if (!opf) {
