@@ -35,6 +35,9 @@ dependencies {
     modCompile "com.github.vini2003:spinnery:${project.spinnery_version}"
     include "com.github.vini2003:spinnery:${project.spinnery_version}"
 
+    modApi "me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}"
+    include "me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}"
+
     //modApi  "io.github.cottonmc:cotton-resources:${cotton_resources_version}"
     //include "io.github.cottonmc:cotton-resources:${cotton_resources_version}"
 }
