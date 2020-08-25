@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "igi",
+    "QCQ",
+    "RiR"
+  ],
+  "key": {
+    "i": {
+      "item": "c:titanium_ingot"
+    },
+    "g": {
+      "item": "minecraft:gold_ingot"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "C": {
+      "item": "minecraft:redstone_comparator"
+    }
+  },
+  "result": {
+    "item": "fasterthanc:empty_fuel_cell",
+    "count": 4
+  }
+}

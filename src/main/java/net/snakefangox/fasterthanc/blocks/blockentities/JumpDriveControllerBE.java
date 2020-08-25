@@ -6,7 +6,6 @@ import java.util.Random;
 import java.util.UUID;
 
 import net.snakefangox.fasterthanc.FRegister;
-import net.snakefangox.fasterthanc.blocks.CreativeEnergyPort;
 import net.snakefangox.fasterthanc.energy.Energy;
 import net.snakefangox.fasterthanc.energy.EnergyHandler;
 import net.snakefangox.fasterthanc.energy.EnergyPackage;
@@ -52,6 +51,7 @@ public class JumpDriveControllerBE extends BlockEntity implements SimpleInventor
 	List<BlockPos> shipPositions = new ArrayList<>();
 	int jumpCountdown = -1;
 	boolean fuel = false;
+	boolean redstoneSignal = false;
 
 	public JumpDriveControllerBE() {
 		super(FRegister.jump_drive_controller_type);
@@ -101,15 +101,15 @@ public class JumpDriveControllerBE extends BlockEntity implements SimpleInventor
 			fuel = false;
 			ItemStack stack = getStack(0);
 			if (shipPositions.isEmpty()) ErrorSender.notifyError(world, pos, "Jump drive mass limit exceeded");
-			if (stack.getItem() instanceof BeaconCoordsStorage) {
-				BlockPos coords = BeaconCoordsStorage.getPos(stack);
-				RegistryKey<World> dim = BeaconCoordsStorage.getDim(stack);
+			BlockPos coords = BeaconCoordsStorage.getPos(stack);
+			if (stack.getItem() instanceof BeaconCoordsStorage && coords != null) {
+				RegistryKey<World> dim = BeaconCoordsStorage.getDim(stack, world);
 				OvertimeManager.addTask(new Jump(shipPositions, coords.subtract(pos), world, dim));
 			} else {
 				OvertimeManager.addTask(new Jump(shipPositions, new BlockPos(
 						(MAX_BLIND_JUMP / 2) - world.getRandom().nextInt(MAX_BLIND_JUMP),
 						0,
-						(MAX_BLIND_JUMP / 2) - world.getRandom().nextInt(MAX_BLIND_JUMP)), world, BeaconCoordsStorage.getDim(stack)));
+						(MAX_BLIND_JUMP / 2) - world.getRandom().nextInt(MAX_BLIND_JUMP)), world, BeaconCoordsStorage.getDim(stack, world)));
 			}
 		} else {
 			if (!isComplete) {
@@ -152,6 +152,7 @@ public class JumpDriveControllerBE extends BlockEntity implements SimpleInventor
 		if (tag.contains("energyID")) {
 			energyID = tag.getUuid("energyID");
 		}
+		redstoneSignal = tag.getBoolean("redstoneSignal");
 	}
 
 	@Override
@@ -160,6 +161,7 @@ public class JumpDriveControllerBE extends BlockEntity implements SimpleInventor
 		if (energyID != null) {
 			tag.putUuid("energyID", energyID);
 		}
+		tag.putBoolean("redstoneSignal", redstoneSignal);
 		return super.toTag(tag);
 	}
 
@@ -170,9 +172,16 @@ public class JumpDriveControllerBE extends BlockEntity implements SimpleInventor
 			if (blockEntity instanceof ReactorControllerBE) {
 				blockEntity = world.getBlockEntity(blockPos[0].add(((ReactorEnergyPortBE) blockEntity).controllerOffset));
 				fuel = ((ReactorControllerBE) blockEntity).consumeFuel();
-			} else if (blockEntity instanceof CreativeEnergyPortBE){
+			} else if (blockEntity instanceof CreativeEnergyPortBE) {
 				fuel = true;
 			}
 		}
+	}
+
+	public void setPowered(boolean b) {
+		if (b != redstoneSignal) {
+			if (b) startJump();
+		}
+		redstoneSignal = b;
 	}
 }

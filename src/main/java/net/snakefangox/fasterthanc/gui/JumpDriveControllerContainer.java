@@ -6,10 +6,11 @@ import net.minecraft.item.ItemStack;
 import net.snakefangox.fasterthanc.FRegister;
 import net.snakefangox.fasterthanc.blocks.blockentities.JumpDriveControllerBE;
 import spinnery.common.container.BaseContainer;
+import spinnery.common.handler.BaseScreenHandler;
 import spinnery.widget.WInterface;
 import spinnery.widget.WSlot;
 
-public class JumpDriveControllerContainer extends BaseContainer {
+public class JumpDriveControllerContainer extends BaseScreenHandler {
 	public static final int INV = 1;
 
 	public final PlayerEntity player;
@@ -22,6 +23,8 @@ public class JumpDriveControllerContainer extends BaseContainer {
 
 	public JumpDriveControllerContainer(int synchronizationID, PlayerInventory playerInventory, JumpDriveControllerBE jumpDriveControllerBE) {
 		super(synchronizationID, playerInventory);
+		//TODO REMOVE THIS
+		type = FRegister.jump_drive_container;
 		this.player = playerInventory.player;
 		controllerBE = jumpDriveControllerBE;
 

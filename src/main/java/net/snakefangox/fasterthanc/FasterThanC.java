@@ -2,7 +2,9 @@ package net.snakefangox.fasterthanc;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.fabricmc.fabric.api.event.server.ServerStopCallback;
 import net.fabricmc.fabric.api.event.server.ServerTickCallback;
 import net.fabricmc.fabric.api.event.world.WorldTickCallback;
@@ -13,6 +15,7 @@ import net.minecraft.util.Identifier;
 import net.snakefangox.fasterthanc.energy.CableNetworkStorage;
 import net.snakefangox.fasterthanc.overtime.OvertimeManager;
 import net.snakefangox.fasterthanc.tools.AutoGenJson;
+import net.snakefangox.fasterthanc.universe.SectorManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,9 +32,11 @@ public class FasterThanC implements ModInitializer {
 		FRegister.registerEverything();
 		Networking.registerToServer();
 
-		ServerTickCallback.EVENT.register(OvertimeManager::serverTick);
-		ServerStopCallback.EVENT.register(OvertimeManager::ServerClosing);
-		WorldTickCallback.EVENT.register(CableNetworkStorage::tickPipes);
+		ServerTickEvents.END_SERVER_TICK.register(OvertimeManager::serverTick);
+		ServerTickEvents.END_SERVER_TICK.register(OvertimeManager::ServerClosing);
+		//ServerLifecycleEvents.SERVER_STARTED.register(SectorManager::serverStart);
+		//ServerLifecycleEvents.SERVER_STOPPING.register(SectorManager::serverStop);
+		ServerTickEvents.END_WORLD_TICK.register(CableNetworkStorage::tickPipes);
 
 		if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
 			try {

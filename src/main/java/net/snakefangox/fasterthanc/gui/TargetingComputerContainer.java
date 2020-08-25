@@ -6,12 +6,13 @@ import net.minecraft.text.Text;
 import net.snakefangox.fasterthanc.FRegister;
 import net.snakefangox.fasterthanc.blocks.blockentities.TargetingComputerBE;
 import spinnery.common.container.BaseContainer;
+import spinnery.common.handler.BaseScreenHandler;
 import spinnery.widget.WSlot;
 
 import java.util.Objects;
 import java.util.UUID;
 
-public class TargetingComputerContainer extends BaseContainer {
+public class TargetingComputerContainer extends BaseScreenHandler {
 
 	public final PlayerEntity player;
 	public final TargetingComputerBE controllerBE;
@@ -25,6 +26,8 @@ public class TargetingComputerContainer extends BaseContainer {
 
 	public TargetingComputerContainer(int synchronizationID, PlayerInventory playerInventory, TargetingComputerBE reactorControllerBE) {
 		super(synchronizationID, playerInventory);
+		//TODO REMOVE THIS
+		type = FRegister.targeting_computer_container;
 		this.player = playerInventory.player;
 		this.controllerBE = reactorControllerBE;
 		WSlot.addHeadlessPlayerInventory(getInterface());

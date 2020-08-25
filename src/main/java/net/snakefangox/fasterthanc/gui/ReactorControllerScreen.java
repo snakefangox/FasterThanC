@@ -1,14 +1,17 @@
 package net.snakefangox.fasterthanc.gui;
 
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import spinnery.client.screen.BaseContainerScreen;
+import spinnery.client.screen.BaseHandledScreen;
 import spinnery.widget.*;
 import spinnery.widget.api.Position;
 import spinnery.widget.api.Size;
 
-public class ReactorControllerScreen extends BaseContainerScreen<ReactorControllerContainer> {
+public class ReactorControllerScreen extends BaseHandledScreen<ReactorControllerContainer> {
 
 	ReactorControllerContainer linkedContainer;
 	WStaticText formed;
@@ -16,9 +19,9 @@ public class ReactorControllerScreen extends BaseContainerScreen<ReactorControll
 	WStaticText remainingTime;
 	WStaticText powerOutput;
 
-	public ReactorControllerScreen(ReactorControllerContainer linkedContainer) {
-		super(new LiteralText(""), linkedContainer, linkedContainer.player);
-		this.linkedContainer = linkedContainer;
+	public ReactorControllerScreen(ReactorControllerContainer handler, PlayerInventory inventory, Text title) {
+		super(title, handler, inventory.player);
+		this.linkedContainer = handler;
 		WInterface wInterface = getInterface();
 		wInterface.setTheme("spinnery:dark");
 		WPanel mainPanel = wInterface.createChild(WPanel::new, Position.of(0, 0, 0),

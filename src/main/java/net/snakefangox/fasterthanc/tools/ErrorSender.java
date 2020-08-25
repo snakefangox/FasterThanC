@@ -14,7 +14,7 @@ public class ErrorSender {
 
 	public static void notifyError(World world, BlockPos pos, String error) {
 		Box box = new Box(pos).expand(15,5,15);
-		List<PlayerEntity> players = world.getEntities(PlayerEntity.class, box, EntityPredicates.VALID_ENTITY);
+		List<PlayerEntity> players = world.getEntitiesByClass(PlayerEntity.class, box, EntityPredicates.VALID_ENTITY);
 		players.forEach(p -> p.sendMessage(new LiteralText(Formatting.RED + "ERROR: " + Formatting.WHITE + error), true));
 	}
 }

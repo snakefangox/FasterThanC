@@ -47,7 +47,7 @@ public class WPowerSwitch extends WToggle {
 
 	@Override
 	@Environment(EnvType.CLIENT)
-	public void draw(MatrixStack matrices, VertexConsumerProvider.Immediate provider) {
+	public void draw(MatrixStack matrices, VertexConsumerProvider provider) {
 		BaseRenderer.drawTexturedQuad(matrices, provider, getX(), getY(), getZ(), getWidth(), getHeight(),
 				toggleState ? OFF : ON);
 	}

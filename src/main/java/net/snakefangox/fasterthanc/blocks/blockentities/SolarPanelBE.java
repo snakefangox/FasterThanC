@@ -32,7 +32,7 @@ public class SolarPanelBE extends BlockEntity implements Energy, Tickable {
 			for (Direction dir : Direction.values()) {
 				BlockEntity be = world.getBlockEntity(pos.offset(dir));
 				if (be instanceof EnergyHandler) {
-					((EnergyHandler) be).provideEnergy(energyID, new EnergyPackage((world.getSkyAngle(0) > 0.7 || world.getSkyAngle(0) < 0.25) ? 1 : 0, NAME));
+					((EnergyHandler) be).provideEnergy(energyID, new EnergyPackage((world.getSkyAngleRadians(0) > 0.7 || world.getSkyAngleRadians(0) < 0.25) ? 1 : 0, NAME));
 					break;
 				}
 			}

@@ -3,9 +3,12 @@
     "package": "net.snakefangox.fasterthanc.mixin",
     "compatibilityLevel": "JAVA_8",
     "mixins": [
+        "MixinMinecraftServer"
     ],
     "client": [
         "MixinWorldRenderer"
+    ],
+    "server": [
     ],
     "injectors": {
         "defaultRequire": 1

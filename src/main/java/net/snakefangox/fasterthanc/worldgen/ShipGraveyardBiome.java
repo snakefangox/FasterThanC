@@ -44,6 +44,4 @@ public class ShipGraveyardBiome extends Biome {
 		addFeature(GenerationStep.Feature.RAW_GENERATION, FRegister.LAVA_DOT.configure(new DefaultFeatureConfig())
 				.createDecoratedFeature(Decorator.CHANCE_HEIGHTMAP.configure(new ChanceDecoratorConfig(5))));
 	}
-
-
 }

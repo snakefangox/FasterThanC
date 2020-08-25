@@ -38,8 +38,8 @@ dependencies {
     modApi "me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}"
     include "me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}"
 
-    //modApi  "io.github.cottonmc:cotton-resources:${cotton_resources_version}"
-    //include "io.github.cottonmc:cotton-resources:${cotton_resources_version}"
+    modApi  "io.github.cottonmc:cotton-resources:${cotton_resources_version}"
+    include "io.github.cottonmc:cotton-resources:${cotton_resources_version}"
 }
 
 processResources {

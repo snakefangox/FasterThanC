@@ -6,11 +6,12 @@ import net.minecraft.text.Text;
 import net.snakefangox.fasterthanc.FRegister;
 import net.snakefangox.fasterthanc.blocks.blockentities.EnergyManagementComputerBE;
 import spinnery.common.container.BaseContainer;
+import spinnery.common.handler.BaseScreenHandler;
 import spinnery.widget.WSlot;
 
 import java.util.UUID;
 
-public class EnergyComputerContainer extends BaseContainer {
+public class EnergyComputerContainer extends BaseScreenHandler {
 
 	public final PlayerEntity player;
 	public final EnergyManagementComputerBE controllerBE;
@@ -25,6 +26,8 @@ public class EnergyComputerContainer extends BaseContainer {
 
 	public EnergyComputerContainer(int synchronizationID, PlayerInventory playerInventory, EnergyManagementComputerBE reactorControllerBE) {
 		super(synchronizationID, playerInventory);
+		//TODO REMOVE THIS
+		type = FRegister.energy_computer_container;
 		this.player = playerInventory.player;
 		this.controllerBE = reactorControllerBE;
 		WSlot.addHeadlessPlayerInventory(getInterface());

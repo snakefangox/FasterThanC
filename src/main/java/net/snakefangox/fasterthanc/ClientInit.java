@@ -7,6 +7,8 @@ import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegi
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRenderer;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
+
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
@@ -22,11 +24,11 @@ public class ClientInit implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 
-		ScreenProviderRegistry.INSTANCE.registerFactory(FRegister.five_slot_container, FiveSlotContainerScreen::new);
-		ScreenProviderRegistry.INSTANCE.registerFactory(FRegister.reactor_container, ReactorControllerScreen::new);
-		ScreenProviderRegistry.INSTANCE.registerFactory(FRegister.jump_drive_container, JumpDriveControllerScreen::new);
-		ScreenProviderRegistry.INSTANCE.registerFactory(FRegister.energy_computer_container, EnergyComputerScreen::new);
-		ScreenProviderRegistry.INSTANCE.registerFactory(FRegister.targeting_computer_container, TargetingComputerScreen::new);
+		ScreenRegistry.register(FRegister.five_slot_container, FiveSlotContainerScreen::new);
+		ScreenRegistry.register(FRegister.reactor_container, ReactorControllerScreen::new);
+		ScreenRegistry.register(FRegister.jump_drive_container, JumpDriveControllerScreen::new);
+		ScreenRegistry.register(FRegister.energy_computer_container, EnergyComputerScreen::new);
+		ScreenRegistry.register(FRegister.targeting_computer_container, TargetingComputerScreen::new);
 
 		BlockEntityRendererRegistry.INSTANCE.register(FRegister.hardpoint_type, HardpointBER::new);
 		BlockEntityRendererRegistry.INSTANCE.register(FRegister.holographic_sky_type, HolographicSkyBER::new);

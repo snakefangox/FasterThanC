@@ -14,7 +14,7 @@ import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.command.arguments.BlockStateArgument;
+import net.minecraft.command.argument.BlockStateArgument;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
@@ -114,7 +114,7 @@ public class Jump implements OvertimeTask {
 				int x = fieldX * 16;
 				int z = fieldZ * 16;
 				Box field = new Box(minX + x, minY, minZ + z, Math.min(minX + x + 16, maxX) + 1, maxY + 1, Math.min(minZ + z + 16, maxZ) + 1);
-				List<Entity> temp = from.getEntities((Entity) null, field, EntityPredicates.VALID_ENTITY);
+				List<Entity> temp = from.getOtherEntities(null, field, EntityPredicates.VALID_ENTITY);
 				temp.removeIf(e -> entities.contains(e));
 				entities.addAll(temp);
 				if (fieldX < xSplit) {

@@ -1,16 +1,24 @@
 package net.snakefangox.fasterthanc.gui;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.World;
+
 import net.snakefangox.fasterthanc.FRegister;
 import net.snakefangox.fasterthanc.items.BeaconCoordsStorage;
 import spinnery.client.screen.BaseContainerScreen;
+import spinnery.client.screen.BaseHandledScreen;
 import spinnery.widget.*;
 import spinnery.widget.api.Position;
 import spinnery.widget.api.Size;
 
-public class JumpDriveControllerScreen extends BaseContainerScreen<JumpDriveControllerContainer> {
+public class JumpDriveControllerScreen extends BaseHandledScreen<JumpDriveControllerContainer> {
 
 	JumpDriveControllerContainer linkedContainer;
 	WStaticText formed;
@@ -18,9 +26,9 @@ public class JumpDriveControllerScreen extends BaseContainerScreen<JumpDriveCont
 	WStaticText destDim;
 	WStaticText destPos;
 
-	public JumpDriveControllerScreen(JumpDriveControllerContainer linkedContainer) {
-		super(new LiteralText(""), linkedContainer, linkedContainer.player);
-		this.linkedContainer = linkedContainer;
+	public JumpDriveControllerScreen(JumpDriveControllerContainer handler, PlayerInventory inventory, Text title) {
+		super(title, handler, inventory.player);
+		this.linkedContainer = handler;
 		WInterface wInterface = getInterface();
 		wInterface.setTheme("spinnery:dark");
 		WPanel mainPanel = wInterface.createChild(WPanel::new, Position.of(0, 0, 0),
@@ -48,11 +56,13 @@ public class JumpDriveControllerScreen extends BaseContainerScreen<JumpDriveCont
 			boolean valid = linkedContainer.complete;
 			formed.setText((valid ? Formatting.GREEN : Formatting.RED) + "Jump Drive Complete: " + (valid ? "True" : "False"));
 			chambers.setText("Jump Factor: " + linkedContainer.chambers);
-			if (linkedContainer.stack.getItem() == FRegister.beacon_coord_chip) {
-				destDim.setText("Destination: " + BeaconCoordsStorage.getDim(linkedContainer.stack).getValue().getPath());
-				destPos.setText(BeaconCoordsStorage.getPos(linkedContainer.stack).toShortString());
+			RegistryKey<World> dim = BeaconCoordsStorage.getDim(linkedContainer.stack, MinecraftClient.getInstance().world);
+			BlockPos pos = BeaconCoordsStorage.getPos(linkedContainer.stack);
+			if (linkedContainer.stack.getItem() == FRegister.beacon_coord_chip && pos != null) {
+				destDim.setText("Destination: " + dim.getValue().getPath());
+				destPos.setText(pos.toShortString());
 			} else {
-				destDim.setText("Destination: Blind Jump");
+				destDim.setText("Destination: " + dim.getValue().getPath());
 				destPos.setText("Blind Jump");
 			}
 		}

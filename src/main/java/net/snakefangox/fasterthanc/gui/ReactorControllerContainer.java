@@ -5,9 +5,10 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.snakefangox.fasterthanc.FRegister;
 import net.snakefangox.fasterthanc.blocks.blockentities.ReactorControllerBE;
 import spinnery.common.container.BaseContainer;
+import spinnery.common.handler.BaseScreenHandler;
 import spinnery.widget.WSlot;
 
-public class ReactorControllerContainer extends BaseContainer {
+public class ReactorControllerContainer extends BaseScreenHandler {
 
 	public final PlayerEntity player;
 	public final ReactorControllerBE controllerBE;
@@ -19,6 +20,8 @@ public class ReactorControllerContainer extends BaseContainer {
 
 	public ReactorControllerContainer(int synchronizationID, PlayerInventory playerInventory, ReactorControllerBE reactorControllerBE) {
 		super(synchronizationID, playerInventory);
+		//TODO REMOVE THIS
+		type = FRegister.reactor_container;
 		this.player = playerInventory.player;
 		this.controllerBE = reactorControllerBE;
 		WSlot.addHeadlessPlayerInventory(getInterface());

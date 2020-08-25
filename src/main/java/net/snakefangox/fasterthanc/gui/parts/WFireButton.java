@@ -23,7 +23,7 @@ public class WFireButton extends WAbstractButton {
 	public static final Identifier FIRE = new Identifier(FasterThanC.MODID, "textures/gui/button_fire.png");
 
 	@Override
-	public void draw(MatrixStack matrices, VertexConsumerProvider.Immediate provider) {
+	public void draw(MatrixStack matrices, VertexConsumerProvider provider) {
 		super.draw(matrices, provider);
 		BaseRenderer.drawTexturedQuad(matrices, provider, getX(), getY(), getZ(), getWidth(), getHeight(), FIRE);
 	}

@@ -35,7 +35,7 @@ public class BeaconCoordsStorage extends Item {
 			tooltip.add(2, new LiteralText("Celestial Body: " + dimName));
 		} else {
 			tooltip.add(1, new LiteralText("WARNING: Missing location data"));
-			tooltip.add(2, new LiteralText("don't use me"));
+			tooltip.add(2, new LiteralText("Program at Jump Beacon"));
 		}
 	}
 
@@ -46,15 +46,14 @@ public class BeaconCoordsStorage extends Item {
 		tag.putString(DIM_NAMESPACE, world.getRegistryKey().getValue().getNamespace());
 	}
 
-	public static RegistryKey<World> getDim(ItemStack stack) {
+	public static RegistryKey<World> getDim(ItemStack stack, World current) {
 		if (stack.hasTag() && stack.getTag().contains(TAG_NAME)) {
 			CompoundTag tag = stack.getOrCreateSubTag(TAG_NAME);
 			String path = tag.getString(DIM_NAME);
 			String namespace = tag.getString(DIM_NAMESPACE);
-			RegistryKey<World> key = RegistryKey.of(Registry.DIMENSION, new Identifier(namespace, path));
-			return key;
+			return RegistryKey.of(Registry.DIMENSION, new Identifier(namespace, path));
 		}
-		return RegistryKey.of(Registry.DIMENSION, new Identifier("overworld"));
+		return current.getRegistryKey();
 	}
 
 	public static BlockPos getPos(ItemStack stack) {
@@ -63,6 +62,6 @@ public class BeaconCoordsStorage extends Item {
 			int[] arrPos = tag.getIntArray(COORD_NAME);
 			return new BlockPos(arrPos[0], arrPos[1], arrPos[2]);
 		}
-		return new BlockPos(0,0,0);
+		return null;
 	}
 }

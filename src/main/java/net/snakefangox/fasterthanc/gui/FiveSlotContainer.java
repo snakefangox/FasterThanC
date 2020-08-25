@@ -4,18 +4,23 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.nbt.CompoundTag;
+
+import net.snakefangox.fasterthanc.FRegister;
 import spinnery.common.container.BaseContainer;
+import spinnery.common.handler.BaseScreenHandler;
 import spinnery.widget.WInterface;
 import spinnery.widget.WSlot;
 import spinnery.widget.api.WNetworked;
 
-public class FiveSlotContainer extends BaseContainer {
+public class FiveSlotContainer extends BaseScreenHandler {
 	public static final int INV = 1;
 
 	public final PlayerEntity player;
 
 	public FiveSlotContainer(int synchronizationID, PlayerInventory playerInventory, Inventory inventory) {
 		super(synchronizationID, playerInventory);
+		//TODO REMOVE THIS
+		type = FRegister.five_slot_container;
 		this.player = playerInventory.player;
 
 		WInterface wInterface = getInterface();

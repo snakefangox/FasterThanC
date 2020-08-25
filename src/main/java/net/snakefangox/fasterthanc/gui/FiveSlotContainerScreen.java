@@ -1,8 +1,13 @@
 package net.snakefangox.fasterthanc.gui;
 
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
+
 import spinnery.client.screen.BaseContainerScreen;
+import spinnery.client.screen.BaseHandledScreen;
 import spinnery.widget.WAbstractWidget;
 import spinnery.widget.WInterface;
 import spinnery.widget.WPanel;
@@ -10,10 +15,10 @@ import spinnery.widget.WSlot;
 import spinnery.widget.api.Position;
 import spinnery.widget.api.Size;
 
-public class FiveSlotContainerScreen extends BaseContainerScreen<FiveSlotContainer> {
+public class FiveSlotContainerScreen extends BaseHandledScreen<FiveSlotContainer> {
 
-	public FiveSlotContainerScreen(FiveSlotContainer linkedContainer) {
-		super(new LiteralText(""), linkedContainer, linkedContainer.player);
+	public FiveSlotContainerScreen(FiveSlotContainer handler, PlayerInventory inventory, Text title) {
+		super(title, handler, inventory.player);
 
 		WInterface wInterface = getInterface();
 		wInterface.setTheme("spinnery:dark");

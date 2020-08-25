@@ -1,5 +1,10 @@
 package net.snakefangox.fasterthanc.blocks;
 
+import net.snakefangox.fasterthanc.FRegister;
+import net.snakefangox.fasterthanc.blocks.blockentities.HighCapacityCableBE;
+import net.snakefangox.fasterthanc.energy.CableNetworkStorage;
+import net.snakefangox.fasterthanc.energy.Energy;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -17,10 +22,6 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import net.snakefangox.fasterthanc.FRegister;
-import net.snakefangox.fasterthanc.blocks.blockentities.HighCapacityCableBE;
-import net.snakefangox.fasterthanc.energy.CableNetworkStorage;
-import net.snakefangox.fasterthanc.energy.Energy;
 
 public class HighCapacityCable extends Block implements BlockEntityProvider {
 
@@ -53,8 +54,9 @@ public class HighCapacityCable extends Block implements BlockEntityProvider {
 	}
 
 	private void createNetwork(World world, BlockPos pos) {
-		if (!(world instanceof ServerWorld))
+		if (!(world instanceof ServerWorld)) {
 			return;
+		}
 		BlockEntity be = world.getBlockEntity(pos);
 		boolean firstNetwork = true;
 		if (be instanceof HighCapacityCableBE) {
@@ -87,8 +89,9 @@ public class HighCapacityCable extends Block implements BlockEntityProvider {
 	@Override
 	public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
 		super.onBroken(world, pos, state);
-		if (!(world instanceof ServerWorld))
+		if (!(world instanceof ServerWorld)) {
 			return;
+		}
 		BlockEntity be = world.getBlockEntity(pos);
 		if (be instanceof HighCapacityCableBE) {
 			CableNetworkStorage.getInstance((ServerWorld) world)
@@ -97,20 +100,40 @@ public class HighCapacityCable extends Block implements BlockEntityProvider {
 	}
 
 	@Override
+	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+		if (!(world instanceof ServerWorld)) {
+			super.onStateReplaced(state, world, pos, newState, moved);
+			return;
+		}
+		BlockEntity be = world.getBlockEntity(pos);
+		if (be instanceof HighCapacityCableBE) {
+			CableNetworkStorage.getInstance((ServerWorld) world)
+					.removeCableFromNetwork(((HighCapacityCableBE) be).getNetwork(), pos, world);
+		}
+		super.onStateReplaced(state, world, pos, newState, moved);
+	}
+
+	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
 		VoxelShape shape = MAIN_BOX;
-		if (state.get(CONNECTED_NORTH))
+		if (state.get(CONNECTED_NORTH)) {
 			shape = VoxelShapes.union(shape, BOX_N);
-		if (state.get(CONNECTED_SOUTH))
+		}
+		if (state.get(CONNECTED_SOUTH)) {
 			shape = VoxelShapes.union(shape, BOX_S);
-		if (state.get(CONNECTED_EAST))
+		}
+		if (state.get(CONNECTED_EAST)) {
 			shape = VoxelShapes.union(shape, BOX_E);
-		if (state.get(CONNECTED_WEST))
+		}
+		if (state.get(CONNECTED_WEST)) {
 			shape = VoxelShapes.union(shape, BOX_W);
-		if (state.get(CONNECTED_UP))
+		}
+		if (state.get(CONNECTED_UP)) {
 			shape = VoxelShapes.union(shape, BOX_U);
-		if (state.get(CONNECTED_DOWN))
+		}
+		if (state.get(CONNECTED_DOWN)) {
 			shape = VoxelShapes.union(shape, BOX_D);
+		}
 		return shape;
 	}
 

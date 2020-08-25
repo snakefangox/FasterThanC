@@ -2,3 +2,10 @@ accessWidener   v1  named
 
 #Allow use of the teleport command logic
 accessible method net/minecraft/server/command/TeleportCommand teleport (Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/entity/Entity;Lnet/minecraft/server/world/ServerWorld;DDDLjava/util/Set;FFLnet/minecraft/server/command/TeleportCommand$LookTarget;)V
+
+#Allows for fixing Spinnery to use the new ScreenHandler API
+accessible field net/minecraft/screen/ScreenHandler type Lnet/minecraft/screen/ScreenHandlerType;
+mutable field net/minecraft/screen/ScreenHandler type Lnet/minecraft/screen/ScreenHandlerType;
+
+#Allow access to world gen constructors
+accessible method net/minecraft/world/gen/chunk/ChunkGeneratorType <init> (Lnet/minecraft/world/gen/chunk/StructuresConfig;Lnet/minecraft/world/gen/chunk/NoiseConfig;Lnet/minecraft/block/BlockState;Lnet/minecraft/block/BlockState;IIIZ)V

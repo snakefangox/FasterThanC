@@ -1,32 +1,39 @@
 package net.snakefangox.fasterthanc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.common.base.Supplier;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.biomes.v1.OverworldBiomes;
-import net.fabricmc.fabric.api.biomes.v1.OverworldClimate;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.Material;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.snakefangox.fasterthanc.blocks.*;
-import net.snakefangox.fasterthanc.blocks.blockentities.*;
-import net.snakefangox.fasterthanc.gui.*;
+import net.snakefangox.fasterthanc.blocks.CreativeEnergyPort;
+import net.snakefangox.fasterthanc.blocks.EnergyManagementComputer;
+import net.snakefangox.fasterthanc.blocks.Hardpoint;
+import net.snakefangox.fasterthanc.blocks.HighCapacityCable;
+import net.snakefangox.fasterthanc.blocks.HolographicSky;
+import net.snakefangox.fasterthanc.blocks.JumpBeacon;
+import net.snakefangox.fasterthanc.blocks.JumpDriveController;
+import net.snakefangox.fasterthanc.blocks.JumpDriveEnergyPort;
+import net.snakefangox.fasterthanc.blocks.ReactorController;
+import net.snakefangox.fasterthanc.blocks.ReactorEnergyPort;
+import net.snakefangox.fasterthanc.blocks.ReactorPort;
+import net.snakefangox.fasterthanc.blocks.ReactorTank;
+import net.snakefangox.fasterthanc.blocks.SolarPanel;
+import net.snakefangox.fasterthanc.blocks.TargetingComputer;
+import net.snakefangox.fasterthanc.blocks.blockentities.CreativeEnergyPortBE;
+import net.snakefangox.fasterthanc.blocks.blockentities.EnergyManagementComputerBE;
+import net.snakefangox.fasterthanc.blocks.blockentities.HardpointBE;
+import net.snakefangox.fasterthanc.blocks.blockentities.HighCapacityCableBE;
+import net.snakefangox.fasterthanc.blocks.blockentities.JumpDriveControllerBE;
+import net.snakefangox.fasterthanc.blocks.blockentities.JumpDriveEnergyPortBE;
+import net.snakefangox.fasterthanc.blocks.blockentities.ReactorControllerBE;
+import net.snakefangox.fasterthanc.blocks.blockentities.ReactorEnergyPortBE;
+import net.snakefangox.fasterthanc.blocks.blockentities.ReactorPortBE;
+import net.snakefangox.fasterthanc.blocks.blockentities.SolarPanelBE;
+import net.snakefangox.fasterthanc.blocks.blockentities.TargetingComputerBE;
+import net.snakefangox.fasterthanc.gui.EnergyComputerContainer;
+import net.snakefangox.fasterthanc.gui.FiveSlotContainer;
+import net.snakefangox.fasterthanc.gui.JumpDriveControllerContainer;
+import net.snakefangox.fasterthanc.gui.ReactorControllerContainer;
+import net.snakefangox.fasterthanc.gui.TargetingComputerContainer;
 import net.snakefangox.fasterthanc.items.BeaconCoordsStorage;
 import net.snakefangox.fasterthanc.items.DebugTool;
 import net.snakefangox.fasterthanc.items.EnergyMeter;
@@ -35,8 +42,32 @@ import net.snakefangox.fasterthanc.worldgen.CrashedShipFeature;
 import net.snakefangox.fasterthanc.worldgen.LavaDotFeature;
 import net.snakefangox.fasterthanc.worldgen.ShipGraveyardBiome;
 
-import java.util.ArrayList;
-import java.util.List;
+import net.minecraft.block.Block;
+import net.minecraft.block.Material;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.biomes.v1.OverworldBiomes;
+import net.fabricmc.fabric.api.biomes.v1.OverworldClimate;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 
 public class FRegister {
 	//Blocks
@@ -86,11 +117,11 @@ public class FRegister {
 	public static final Item basic_laser = new ShipWeapon(new Item.Settings().group(FasterThanC.GENERAL).maxCount(1));
 
 	//Containers
-	public static final Identifier five_slot_container = new Identifier(FasterThanC.MODID, "five_slot_container");
-	public static final Identifier reactor_container = new Identifier(FasterThanC.MODID, "reactor_container");
-	public static final Identifier jump_drive_container = new Identifier(FasterThanC.MODID, "jump_drive_container");
-	public static final Identifier energy_computer_container = new Identifier(FasterThanC.MODID, "energy_computer_container");
-	public static final Identifier targeting_computer_container = new Identifier(FasterThanC.MODID, "targeting_computer_container");
+	public static ScreenHandlerType<FiveSlotContainer> five_slot_container;
+	public static ScreenHandlerType<ReactorControllerContainer> reactor_container;
+	public static ScreenHandlerType<JumpDriveControllerContainer> jump_drive_container;
+	public static ScreenHandlerType<EnergyComputerContainer> energy_computer_container;
+	public static ScreenHandlerType<TargetingComputerContainer> targeting_computer_container;
 
 	//Sound Events
 	public static SoundEvent JUMP_DRIVE_SPOOLS;
@@ -141,27 +172,27 @@ public class FRegister {
 		registerItem(beacon_coord_chip, new Identifier(FasterThanC.MODID, "beacon_coord_chip"));
 		registerItem(basic_laser, new Identifier(FasterThanC.MODID, "basic_laser"));
 
-		ContainerProviderRegistry.INSTANCE.registerFactory(five_slot_container,
-				(syncId, id, player, buf) -> new FiveSlotContainer(syncId, player.inventory,
-						(Inventory) player.world.getBlockEntity(buf.readBlockPos())));
-		ContainerProviderRegistry.INSTANCE.registerFactory(reactor_container,
-				(syncId, id, player, buf) -> new ReactorControllerContainer(syncId, player.inventory,
-						(ReactorControllerBE) player.world.getBlockEntity(buf.readBlockPos())));
-		ContainerProviderRegistry.INSTANCE.registerFactory(jump_drive_container,
-				(syncId, id, player, buf) -> new JumpDriveControllerContainer(syncId, player.inventory,
-						(JumpDriveControllerBE) player.world.getBlockEntity(buf.readBlockPos())));
-		ContainerProviderRegistry.INSTANCE.registerFactory(energy_computer_container,
-				(syncId, id, player, buf) -> new EnergyComputerContainer(syncId, player.inventory,
-						(EnergyManagementComputerBE) player.world.getBlockEntity(buf.readBlockPos())));
-		ContainerProviderRegistry.INSTANCE.registerFactory(targeting_computer_container,
-				(syncId, id, player, buf) -> new TargetingComputerContainer(syncId, player.inventory,
-						(TargetingComputerBE) player.world.getBlockEntity(buf.readBlockPos())));
+		five_slot_container = ScreenHandlerRegistry.registerExtended(new Identifier(FasterThanC.MODID, "five_slot_container"),
+				(syncId, inv, buf) -> new FiveSlotContainer(syncId, inv,
+						(Inventory) inv.player.world.getBlockEntity(buf.readBlockPos())));
+		reactor_container = ScreenHandlerRegistry.registerExtended(new Identifier(FasterThanC.MODID, "reactor_container"),
+				(syncId, inv, buf) -> new ReactorControllerContainer(syncId, inv,
+						(ReactorControllerBE) inv.player.world.getBlockEntity(buf.readBlockPos())));
+		jump_drive_container = ScreenHandlerRegistry.registerExtended(new Identifier(FasterThanC.MODID, "jump_drive_container"),
+				(syncId, inv, buf) -> new JumpDriveControllerContainer(syncId, inv,
+						(JumpDriveControllerBE) inv.player.world.getBlockEntity(buf.readBlockPos())));
+		energy_computer_container = ScreenHandlerRegistry.registerExtended(new Identifier(FasterThanC.MODID, "energy_computer_container"),
+				(syncId, inv, buf) -> new EnergyComputerContainer(syncId, inv,
+						(EnergyManagementComputerBE) inv.player.world.getBlockEntity(buf.readBlockPos())));
+		targeting_computer_container = ScreenHandlerRegistry.registerExtended(new Identifier(FasterThanC.MODID, "targeting_computer_container"),
+				(syncId, inv, buf) -> new TargetingComputerContainer(syncId, inv,
+						(TargetingComputerBE) inv.player.world.getBlockEntity(buf.readBlockPos())));
 
 		JUMP_DRIVE_SPOOLS = registerSoundEvent(new Identifier(FasterThanC.MODID, "jumpdrive"));
 		LASER_FIRES = registerSoundEvent(new Identifier(FasterThanC.MODID, "laser_shot"));
 		DARK_HALLS = registerSoundEvent(new Identifier(FasterThanC.MODID, "dark_halls"));
 
-		CRASHED_SHIP = Registry.register(
+		/*CRASHED_SHIP = Registry.register(
 				Registry.FEATURE,
 				new Identifier(FasterThanC.MODID, "crashed_ship_parts"),
 				new CrashedShipFeature(DefaultFeatureConfig.CODEC));
@@ -173,8 +204,7 @@ public class FRegister {
 		SPACESHIP_GRAVEYARD = Registry.register(Registry.BIOME,
 				new Identifier(FasterThanC.MODID, "spaceship_graveyard"), new ShipGraveyardBiome());
 
-
-		OverworldBiomes.addContinentalBiome(SPACESHIP_GRAVEYARD, OverworldClimate.DRY, 0.6D);
+		OverworldBiomes.addContinentalBiome(SPACESHIP_GRAVEYARD, OverworldClimate.DRY, 0.8D);*/
 
 		registerHull();
 	}
@@ -186,9 +216,9 @@ public class FRegister {
 		setRenderLayer(jump_energy, RenderLayerEnum.TRANSLUCENT);
 	}
 
-	private static final String[] colours = new String[]{"white", "light_gray", "gray", "black", "brown", "red",
+	private static final String[] colours = new String[] {"white", "light_gray", "gray", "black", "brown", "red",
 			"orange", "yellow", "lime", "green", "cyan", "light_blue", "blue", "purple", "magenta", "pink"};
-	private static final String[] types = new String[]{"brick", "camo", "lined", "plate", "scale", "scatter",
+	private static final String[] types = new String[] {"brick", "camo", "lined", "plate", "scale", "scatter",
 			"scatter_plate", "skirting", "tile", "vert_brick"};
 
 	public static void registerHull() {
@@ -224,14 +254,14 @@ public class FRegister {
 	@Environment(EnvType.CLIENT)
 	private static void setRenderLayer(Block block, RenderLayerEnum layer) {
 		switch (layer) {
-			case CUTOUT:
-				BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
-				break;
-			case TRANSLUCENT:
-				BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getTranslucent());
-				break;
-			default:
-				break;
+		case CUTOUT:
+			BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
+			break;
+		case TRANSLUCENT:
+			BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getTranslucent());
+			break;
+		default:
+			break;
 		}
 	}
 

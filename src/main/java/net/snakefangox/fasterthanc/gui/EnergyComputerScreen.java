@@ -1,23 +1,26 @@
 package net.snakefangox.fasterthanc.gui;
 
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.snakefangox.fasterthanc.gui.parts.WBlankPanel;
 import net.snakefangox.fasterthanc.gui.parts.WPowerSwitch;
 import spinnery.client.screen.BaseContainerScreen;
+import spinnery.client.screen.BaseHandledScreen;
 import spinnery.widget.*;
 import spinnery.widget.api.Position;
 import spinnery.widget.api.Size;
 
-public class EnergyComputerScreen extends BaseContainerScreen<EnergyComputerContainer> {
+public class EnergyComputerScreen extends BaseHandledScreen<EnergyComputerContainer> {
 
 	WVerticalScrollableContainer energyNetScroll;
 	EnergyComputerContainer linkedContainer;
 
-	public EnergyComputerScreen(EnergyComputerContainer linkedContainer) {
-		super(new LiteralText(""), linkedContainer, linkedContainer.player);
-		this.linkedContainer = linkedContainer;
+	public EnergyComputerScreen(EnergyComputerContainer handler, PlayerInventory inventory, Text title) {
+		super(title, handler, inventory.player);
+		this.linkedContainer = handler;
 		WInterface wInterface = getInterface();
 		wInterface.setTheme("spinnery:dark");
 		WPanel mainPanel = wInterface.createChild(WPanel::new, Position.of(0, 0, 0),
@@ -43,7 +46,6 @@ public class EnergyComputerScreen extends BaseContainerScreen<EnergyComputerCont
 			for (int j = 0; j < linkedContainer.uuids.length; j++) {
 				WBlankPanel panel = energyNetScroll.createChild(WBlankPanel::new, Position.of(energyNetScroll, 0, 16 * j),
 						Size.of(energyNetScroll.getWidth() - energyNetScroll.getScrollbarWidth() - 8, 30));
-				panel.setIndex(j);
 				panel.createChild(WStaticText::new, Position.of(panel, 20, 2, 10), Size.of(100, 16))
 						.setText(linkedContainer.names[j]);
 				WPowerSwitch powerSwitch = panel.createChild(WPowerSwitch::new, Position.of(panel, 0, 2, 10), Size.of(16, 16))

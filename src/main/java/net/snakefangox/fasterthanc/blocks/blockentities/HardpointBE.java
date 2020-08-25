@@ -16,7 +16,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.RayTraceContext;
+import net.minecraft.world.RaycastContext;
 import net.minecraft.world.explosion.Explosion;
 import net.snakefangox.fasterthanc.FRegister;
 import net.snakefangox.fasterthanc.blocks.Hardpoint;
@@ -124,11 +124,11 @@ public class HardpointBE extends EnergyBE implements SimpleInventory, BlockEntit
 
 			Vec3d firingPosVec = firingDirVec.multiply(120);
 			firingPosVec = firingPosVec.add(pos.getX(), pos.getY(), pos.getZ());
-			RayTraceContext rtc = new RayTraceContext(new Vec3d(pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5),
-					firingPosVec, RayTraceContext.ShapeType.COLLIDER, RayTraceContext.FluidHandling.ANY,
+			RaycastContext rtc = new RaycastContext(new Vec3d(pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5),
+					firingPosVec, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.ANY,
 					new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ()));
 			assert world != null;
-			BlockHitResult result = world.rayTrace(rtc);
+			BlockHitResult result = world.raycast(rtc);
 			for (int i = 0; i < Math.sqrt(pos.getSquaredDistance(result.getBlockPos())); i++) {
 				Vec3d part = firingDirVec.multiply(i);
 				((ServerWorld) world).spawnParticles(ParticleTypes.FIREWORK, pos.getX() + 0.5 + part.x, pos.getY() + 1.5 + part.y, pos.getZ() + 0.5 + part.z,
