@@ -1,20 +1,20 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " ii",
-    "iGi",
-    "ii "
+    "i i",
+    "i i",
+    "iGi"
   ],
   "key": {
     "i": {
       "item": "minecraft:iron_ingot"
     },
     "G": {
-      "item": "minecraft:glass"
+      "item": "minecraft:iron_block"
     }
   },
   "result": {
-    "item": "fasterthanc:empty_fuel_cell",
-    "count": 4
+    "item": "fasterthanc:deorbiter",
+    "count": 1
   }
 }

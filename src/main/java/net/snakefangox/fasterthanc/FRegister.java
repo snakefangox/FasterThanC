@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.common.base.Supplier;
 import net.snakefangox.fasterthanc.blocks.CreativeEnergyPort;
+import net.snakefangox.fasterthanc.blocks.Deorbitor;
 import net.snakefangox.fasterthanc.blocks.EnergyManagementComputer;
 import net.snakefangox.fasterthanc.blocks.Hardpoint;
 import net.snakefangox.fasterthanc.blocks.HighCapacityCable;
@@ -19,6 +20,7 @@ import net.snakefangox.fasterthanc.blocks.ReactorTank;
 import net.snakefangox.fasterthanc.blocks.SolarPanel;
 import net.snakefangox.fasterthanc.blocks.TargetingComputer;
 import net.snakefangox.fasterthanc.blocks.blockentities.CreativeEnergyPortBE;
+import net.snakefangox.fasterthanc.blocks.blockentities.DeorbitorBE;
 import net.snakefangox.fasterthanc.blocks.blockentities.EnergyManagementComputerBE;
 import net.snakefangox.fasterthanc.blocks.blockentities.HardpointBE;
 import net.snakefangox.fasterthanc.blocks.blockentities.HighCapacityCableBE;
@@ -38,9 +40,6 @@ import net.snakefangox.fasterthanc.items.BeaconCoordsStorage;
 import net.snakefangox.fasterthanc.items.DebugTool;
 import net.snakefangox.fasterthanc.items.EnergyMeter;
 import net.snakefangox.fasterthanc.items.ShipWeapon;
-import net.snakefangox.fasterthanc.worldgen.CrashedShipFeature;
-import net.snakefangox.fasterthanc.worldgen.LavaDotFeature;
-import net.snakefangox.fasterthanc.worldgen.ShipGraveyardBiome;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
@@ -61,10 +60,7 @@ import net.minecraft.world.gen.feature.Feature;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.biomes.v1.OverworldBiomes;
-import net.fabricmc.fabric.api.biomes.v1.OverworldClimate;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -91,6 +87,7 @@ public class FRegister {
 	public static final Block jump_energy = new Block(FabricBlockSettings.of(Material.GLASS).strength(3, 20).nonOpaque());
 	public static final Block jump_breaker = new Block(FabricBlockSettings.of(Material.METAL).strength(3, 20));
 	public static final Block creative_energy_port = new CreativeEnergyPort(FabricBlockSettings.of(Material.METAL).strength(3, 20));
+	public static final Block deorbiter = new Deorbitor(FabricBlockSettings.of(Material.METAL).strength(3, 20).nonOpaque());
 	public static final TargetingComputer targeting_computer = new TargetingComputer(FabricBlockSettings.of(Material.METAL).strength(3, 20));
 	public static final Block holographic_sky = new HolographicSky(FabricBlockSettings.of(Material.GLASS).strength(3, 20).sounds(BlockSoundGroup.GLASS).nonOpaque().allowsSpawning((state, world, pos, type) -> false).solidBlock((state, world, pos) -> false).suffocates((state, world, pos) -> false));
 
@@ -104,12 +101,14 @@ public class FRegister {
 	public static BlockEntityType<EnergyManagementComputerBE> energy_management_computer_type;
 	public static BlockEntityType<SolarPanelBE> solar_panel_type;
 	public static BlockEntityType<HardpointBE> hardpoint_type;
+	public static BlockEntityType<DeorbitorBE> deorbiter_type;
 	public static BlockEntityType<CreativeEnergyPortBE> creative_energy_port_type;
 	public static BlockEntityType<TargetingComputerBE> targeting_computer_type;
 	public static BlockEntityType<HolographicSky.BE> holographic_sky_type;
 
 	//Items
 	public static final Item debug_tool = new DebugTool(new Item.Settings().group(FasterThanC.GENERAL).maxCount(1));
+	public static final Item hyper_magnet = new Item(new Item.Settings().group(FasterThanC.GENERAL).maxCount(1));
 	public static final Item empty_fuel_cell = new Item(new Item.Settings().group(FasterThanC.GENERAL).maxCount(16));
 	public static final Item fuel_cell = new Item(new Item.Settings().group(FasterThanC.GENERAL).maxCount(16));
 	public static final Item energy_meter = new EnergyMeter(new Item.Settings().group(FasterThanC.GENERAL).maxCount(1));
@@ -156,6 +155,7 @@ public class FRegister {
 		jump_drive_energy_port_type = registerBlock(jump_drive_energy_port, new Identifier(FasterThanC.MODID, "jump_drive_energy_port"), JumpDriveEnergyPortBE::new);
 		registerBlock(jump_drive_field_chamber, new Identifier(FasterThanC.MODID, "jump_drive_field_chamber"));
 		registerBlock(jump_beacon, new Identifier(FasterThanC.MODID, "jump_beacon"));
+		deorbiter_type = registerBlock(deorbiter, new Identifier(FasterThanC.MODID, "deorbiter"), DeorbitorBE::new);
 		energy_management_computer_type = registerBlock(energy_management_computer, new Identifier(FasterThanC.MODID, "energy_management_computer"), EnergyManagementComputerBE::new);
 		solar_panel_type = registerBlock(solar_panel, new Identifier(FasterThanC.MODID, "solar_panel"), SolarPanelBE::new);
 		hardpoint_type = registerBlock(hardpoint, new Identifier(FasterThanC.MODID, "hardpoint"), HardpointBE::new);
@@ -171,6 +171,7 @@ public class FRegister {
 		registerItem(energy_meter, new Identifier(FasterThanC.MODID, "energy_meter"));
 		registerItem(beacon_coord_chip, new Identifier(FasterThanC.MODID, "beacon_coord_chip"));
 		registerItem(basic_laser, new Identifier(FasterThanC.MODID, "basic_laser"));
+		registerItem(hyper_magnet, new Identifier(FasterThanC.MODID, "hyper_magnet"));
 
 		five_slot_container = ScreenHandlerRegistry.registerExtended(new Identifier(FasterThanC.MODID, "five_slot_container"),
 				(syncId, inv, buf) -> new FiveSlotContainer(syncId, inv,
@@ -191,20 +192,6 @@ public class FRegister {
 		JUMP_DRIVE_SPOOLS = registerSoundEvent(new Identifier(FasterThanC.MODID, "jumpdrive"));
 		LASER_FIRES = registerSoundEvent(new Identifier(FasterThanC.MODID, "laser_shot"));
 		DARK_HALLS = registerSoundEvent(new Identifier(FasterThanC.MODID, "dark_halls"));
-
-		/*CRASHED_SHIP = Registry.register(
-				Registry.FEATURE,
-				new Identifier(FasterThanC.MODID, "crashed_ship_parts"),
-				new CrashedShipFeature(DefaultFeatureConfig.CODEC));
-		LAVA_DOT = Registry.register(
-				Registry.FEATURE,
-				new Identifier(FasterThanC.MODID, "lava_dot"),
-				new LavaDotFeature(DefaultFeatureConfig.CODEC));
-
-		SPACESHIP_GRAVEYARD = Registry.register(Registry.BIOME,
-				new Identifier(FasterThanC.MODID, "spaceship_graveyard"), new ShipGraveyardBiome());
-
-		OverworldBiomes.addContinentalBiome(SPACESHIP_GRAVEYARD, OverworldClimate.DRY, 0.8D);*/
 
 		registerHull();
 	}

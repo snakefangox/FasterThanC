@@ -195,5 +195,7 @@
     "text.fasterthanc.jump_drive": "Jump Drive",
     "text.fasterthanc.reactor": "Reactor",
     "text.fasterthanc.solar_panel": "Solar Panel",
-    "text.fasterthanc.creative_energy_port": "Creative Energy Port"
+    "text.fasterthanc.creative_energy_port": "Creative Energy Port",
+"block.fasterthanc.deorbiter": "Deorbiter",
+"item.fasterthanc.hyper_magnet": "Hyper Magnet"
 }

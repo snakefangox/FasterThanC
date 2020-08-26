@@ -1,24 +1,22 @@
 package net.snakefangox.fasterthanc;
 
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.event.server.ServerStartCallback;
-import net.fabricmc.fabric.api.event.server.ServerStopCallback;
-import net.fabricmc.fabric.api.event.server.ServerTickCallback;
-import net.fabricmc.fabric.api.event.world.WorldTickCallback;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
+import java.io.File;
+import java.io.IOException;
+
 import net.snakefangox.fasterthanc.energy.CableNetworkStorage;
 import net.snakefangox.fasterthanc.overtime.OvertimeManager;
 import net.snakefangox.fasterthanc.tools.AutoGenJson;
-import net.snakefangox.fasterthanc.universe.SectorManager;
+import net.snakefangox.fasterthanc.worldgen.LootChestAdditions;
 
-import java.io.File;
-import java.io.IOException;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
+
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
+import net.fabricmc.loader.api.FabricLoader;
 
 public class FasterThanC implements ModInitializer {
 	public static final String MODID = "fasterthanc";
@@ -37,6 +35,7 @@ public class FasterThanC implements ModInitializer {
 		//ServerLifecycleEvents.SERVER_STARTED.register(SectorManager::serverStart);
 		//ServerLifecycleEvents.SERVER_STOPPING.register(SectorManager::serverStop);
 		ServerTickEvents.END_WORLD_TICK.register(CableNetworkStorage::tickPipes);
+		LootTableLoadingCallback.EVENT.register(LootChestAdditions::registerEndCityLoot);
 
 		if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
 			try {

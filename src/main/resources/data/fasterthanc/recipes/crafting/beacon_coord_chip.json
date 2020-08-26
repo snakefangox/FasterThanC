@@ -7,7 +7,7 @@
   ],
   "key": {
     "i": {
-      "item": "c:titanium_ingot"
+      "item": "minecraft:iron_ingot"
     },
     "g": {
       "item": "minecraft:gold_ingot"
@@ -19,11 +19,11 @@
       "item": "minecraft:redstone"
     },
     "C": {
-      "item": "minecraft:redstone_comparator"
+      "item": "minecraft:comparator"
     }
   },
   "result": {
-    "item": "fasterthanc:empty_fuel_cell",
-    "count": 4
+    "item": "fasterthanc:beacon_coord_chip",
+    "count": 1
   }
 }

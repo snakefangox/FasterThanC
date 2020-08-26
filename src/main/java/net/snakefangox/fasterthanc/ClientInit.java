@@ -15,6 +15,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.snakefangox.fasterthanc.blocks.HolographicSky;
+import net.snakefangox.fasterthanc.blocks.blockentities.rendering.DeorbitorBER;
 import net.snakefangox.fasterthanc.blocks.blockentities.rendering.HardpointBER;
 import net.snakefangox.fasterthanc.blocks.blockentities.rendering.HolographicSkyBER;
 import net.snakefangox.fasterthanc.gui.*;
@@ -32,6 +33,7 @@ public class ClientInit implements ClientModInitializer {
 
 		BlockEntityRendererRegistry.INSTANCE.register(FRegister.hardpoint_type, HardpointBER::new);
 		BlockEntityRendererRegistry.INSTANCE.register(FRegister.holographic_sky_type, HolographicSkyBER::new);
+		BlockEntityRendererRegistry.INSTANCE.register(FRegister.deorbiter_type, DeorbitorBER::new);
 
 		BuiltinItemRendererRegistry.INSTANCE.register(FRegister.holographic_sky.asItem(), new BuiltinItemRenderer() {
 			private final BlockEntity entity = new HolographicSky.BE();
